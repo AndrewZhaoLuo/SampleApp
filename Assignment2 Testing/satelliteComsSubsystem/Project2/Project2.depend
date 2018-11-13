@@ -1,0 +1,92 @@
+# depslib dependency file v1.0
+1539385621 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\clock.c
+	<sys/time.h>
+
+1539385621 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\consoledisplaysubsystem.c
+	"globals.h"
+	"consoleDisplaySubsystem.h"
+
+1539391686 c:\users\alyssr3\documents\ee 474\ee474\assignment2\globals.h
+	"bool.h"
+	"thrusterSubsystem.h"
+	"satelliteComsSubsystem.h"
+	"warningAlarmSubsystem.h"
+	"powerSubsystem.h"
+	"consoleDisplaySubsystem.h"
+
+1539385621 c:\users\alyssr3\documents\ee 474\ee474\assignment2\bool.h
+
+1539385621 c:\users\alyssr3\documents\ee 474\ee474\assignment2\thrustersubsystem.h
+
+1539385621 c:\users\alyssr3\documents\ee 474\ee474\assignment2\satellitecomssubsystem.h
+	"bool.h"
+
+1539385621 c:\users\alyssr3\documents\ee 474\ee474\assignment2\warningalarmsubsystem.h
+	"bool.h"
+
+1539395912 c:\users\alyssr3\documents\ee 474\ee474\assignment2\powersubsystem.h
+	"bool.h"
+
+1539385621 c:\users\alyssr3\documents\ee 474\ee474\assignment2\consoledisplaysubsystem.h
+	"bool.h"
+
+1539396298 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\main.c
+	<stdio.h>
+	"TCB.h"
+	"scheduler.h"
+	"globals.h"
+
+1539382079 c:\users\alyssr3\documents\ee 474\ee474\assignment2\tcb.h
+
+1539385621 c:\users\alyssr3\documents\ee 474\ee474\assignment2\scheduler.h
+	"taskqueue.h"
+
+1539385621 c:\users\alyssr3\documents\ee 474\ee474\assignment2\taskqueue.h
+	"TCB.h"
+
+1539385621 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\rand1.c
+	<stdlib.h>
+	<stdio.h>
+	<limits.h>
+	"rand1.h"
+
+1539382079 c:\users\alyssr3\documents\ee 474\ee474\assignment2\rand1.h
+
+1539391718 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\satellitecomssubsystem.c
+	"globals.h"
+	"satelliteComsSubsystem.h"
+	"rand1.h"
+
+1539391779 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\scheduler.c
+	"scheduler.h"
+	"clock.h"
+	"taskqueue.h"
+	"TCB.h"
+
+1539382079 c:\users\alyssr3\documents\ee 474\ee474\assignment2\clock.h
+
+1539382079 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\taskqueue.c
+	"taskqueue.h"
+
+1539382079 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\tcb.c
+	<stdio.h>
+	"clock.h"
+	"TCB.h"
+
+1539391686 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\initglobals.c
+	"globals.h"
+
+1539396144 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\powersubsystem.c
+	"globals.h"
+	"powerSubsystem.h"
+
+1539396441 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\thrustersubsystem.c
+	"globals.h"
+	"thrusterSubsystem.h"
+	"rand1.h"
+
+1539391686 source:c:\users\alyssr3\documents\ee 474\ee474\assignment2\warningalarmsubsystem.c
+	<stdio.h>
+	"globals.h"
+	"warningAlarmSubsystem.h"
+

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Assignment2" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Assignment2" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Assignment2" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="Assignment2Arduino.ino" />
+		<Unit filename="Assignment3.ino" />
+		<Unit filename="LCD.h" />
+		<Unit filename="LCD.ino" />
+		<Unit filename="TCB.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="TCB.h" />
+		<Unit filename="bool.h" />
+		<Unit filename="circularBuffer.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="circularBuffer.h" />
+		<Unit filename="clock.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="clock.h" />
+		<Unit filename="consoleDisplaySubsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="consoleDisplaySubsystem.h" />
+		<Unit filename="globals.h" />
+		<Unit filename="initGlobals.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="powerSubsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="powerSubsystem.h" />
+		<Unit filename="print_format.cpp" />
+		<Unit filename="print_format.h" />
+		<Unit filename="rand1.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="rand1.h" />
+		<Unit filename="satelliteComsSubsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="satelliteComsSubsystem.h" />
+		<Unit filename="scheduler.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="scheduler.exe" />
+		<Unit filename="scheduler.h" />
+		<Unit filename="solarPanelControlSubsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="solarPanelControlSubsystem.h" />
+		<Unit filename="taskqueue.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="taskqueue.h" />
+		<Unit filename="thrusterSubsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="thrusterSubsystem.h" />
+		<Unit filename="vehicleCommsSubsystem.cpp" />
+		<Unit filename="vehicleCommsSubsystem.h" />
+		<Unit filename="warningAlarmSubsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="warningAlarmSubsystem.h" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

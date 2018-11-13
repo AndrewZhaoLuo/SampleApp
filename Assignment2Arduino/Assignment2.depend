@@ -1,0 +1,90 @@
+# depslib dependency file v1.0
+1539374871 source:c:\users\luoa\documents\ee474\assignment2\clock.c
+	<sys/time.h>
+
+1539382374 source:c:\users\luoa\documents\ee474\assignment2\consoledisplaysubsystem.c
+	"globals.h"
+	"consoleDisplaySubsystem.h"
+
+1539382062 c:\users\luoa\documents\ee474\assignment2\consoledisplaysubsystem.h
+	"bool.h"
+
+1539382045 c:\users\luoa\documents\ee474\assignment2\globals.h
+	"bool.h"
+	"thrusterSubsystem.h"
+	"satelliteComsSubsystem.h"
+	"warningAlarmSubsystem.h"
+	"powerSubsystem.h"
+	"consoleDisplaySubsystem.h"
+
+1539382097 c:\users\luoa\documents\ee474\assignment2\thrustersubsystem.h
+
+1539382080 c:\users\luoa\documents\ee474\assignment2\satellitecomssubsystem.h
+	"bool.h"
+
+1539382083 c:\users\luoa\documents\ee474\assignment2\warningalarmsubsystem.h
+	"bool.h"
+
+1539382064 c:\users\luoa\documents\ee474\assignment2\powersubsystem.h
+	"bool.h"
+
+1539381939 source:c:\users\luoa\documents\ee474\assignment2\initglobals.c
+	"globals.h"
+
+1539375457 source:c:\users\luoa\documents\ee474\assignment2\main.c
+	<stdio.h>
+	"TCB.h"
+	"scheduler.h"
+	"globals.h"
+
+1539313860 c:\users\luoa\documents\ee474\assignment2\tcb.h
+
+1539375325 c:\users\luoa\documents\ee474\assignment2\scheduler.h
+	"taskqueue.h"
+
+1539459398 c:\users\luoa\documents\ee474\assignment2\taskqueue.h
+	"TCB.h"
+
+1539382031 c:\users\luoa\documents\ee474\assignment2\bool.h
+
+1539382364 source:c:\users\luoa\documents\ee474\assignment2\powersubsystem.c
+	"globals.h"
+	"powerSubsystem.h"
+
+1539382848 source:c:\users\luoa\documents\ee474\assignment2\rand1.c
+	<stdlib.h>
+	<stdio.h>
+	<limits.h>
+	"rand1.h"
+
+1539374871 c:\users\luoa\documents\ee474\assignment2\rand1.h
+
+1539382383 source:c:\users\luoa\documents\ee474\assignment2\satellitecomssubsystem.c
+	"globals.h"
+	"satelliteComsSubsystem.h"
+
+1539374871 source:c:\users\luoa\documents\ee474\assignment2\scheduler.c
+	"scheduler.h"
+	"clock.h"
+	"taskqueue.h"
+	"TCB.h"
+
+1539313860 c:\users\luoa\documents\ee474\assignment2\clock.h
+
+1539313860 source:c:\users\luoa\documents\ee474\assignment2\taskqueue.c
+	"taskqueue.h"
+
+1539313860 source:c:\users\luoa\documents\ee474\assignment2\tcb.c
+	<stdio.h>
+	"clock.h"
+	"TCB.h"
+
+1539382392 source:c:\users\luoa\documents\ee474\assignment2\thrustersubsystem.c
+	"globals.h"
+	"thrusterSubsystem.h"
+
+1539382735 source:c:\users\luoa\documents\ee474\assignment2\warningalarmsubsystem.c
+	<stdio.h>
+	"globals.h"
+	"warningAlarmSubsystem.h"
+
