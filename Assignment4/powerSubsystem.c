@@ -84,9 +84,9 @@ void powerSubsystemFunction(void* data){
   }
 
   // for debugging
-  print_format("SUBSYSTEM POWER\n");
+  /*print_format("SUBSYSTEM POWER\n");
   print_format("\tCurrent power consumption: %d \n\tCurrent power generation: %d \n\tBattery level: %d \n\tSolar panels: %d\n",
-         *(powerData ->powerConsumptionPtr), *(powerData->powerGenerationPtr), *(powerData->batteryLevelPtr), *(powerData->solarPanelStatePtr));
+         *(powerData ->powerConsumptionPtr), *(powerData->powerGenerationPtr), *(powerData->batteryLevelPtr), *(powerData->solarPanelStatePtr));*/
 
   // call counting to control incremental behavior
   powerData->callCounter++;

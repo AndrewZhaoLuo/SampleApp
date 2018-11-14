@@ -46,7 +46,7 @@ void warningAlarmFunction(void* data) {
     Bool fuelLow = *(warningData->fuelLowPtr);  // Fuel is less than or equal to 10
     Bool batteryLow = *(warningData->batteryLowPtr);  // Battery is less than or equal to 10
 
-    print_format("SUBSYSTEM WARNING:\n");
+    //print_format("SUBSYSTEM WARNING:\n");
     tft_set_fontsize(1);
 
 
@@ -54,34 +54,34 @@ void warningAlarmFunction(void* data) {
 
     // determine correct warning colors for anunciation display
     if (batteryLevel > MEDIUM_LEVEL_BATTERY_WARNING) {
-      print_format("\tBATTERY: GREEN\n");   // solid display
+      //print_format("\tBATTERY: GREEN\n");   // solid display
       color_battery = GREEN;
       *(warningData->batteryLowPtr) = FALSE;
     } else if (batteryLevel > LOW_LEVEL_BATTERY_WARNING) {
-      print_format("\tBATTERY: ORANGE\n");  // flash 1 second period
+      //print_format("\tBATTERY: ORANGE\n");  // flash 1 second period
       color_battery = ORANGE;
       *(warningData->batteryLowPtr) = FALSE;
     } else {
-      print_format("\tBATTERY: RED\n");
+      //print_format("\tBATTERY: RED\n");
       color_battery = RED;
       *(warningData->batteryLowPtr) = TRUE; // flash 1 second period
     }
 
     if (fuelLevel > MEDIUM_LEVEL_FUEL_WARNING) {
-      print_format("\tFUEL: GREEN\n");
+      //print_format("\tFUEL: GREEN\n");
       color_fuel = GREEN;
       *(warningData->fuelLowPtr) = FALSE;   // solid display
     } else if (fuelLevel > LOW_LEVEL_FUEL_WARNING) {
-      print_format("\tFUEL: ORANGE\n");
+      //print_format("\tFUEL: ORANGE\n");
       color_fuel = ORANGE;
       *(warningData->fuelLowPtr) = FALSE;   // flash 2 second period
     } else {
-      print_format("\tFUEL: RED\n");
+      //print_format("\tFUEL: RED\n");
       color_fuel = RED;
       *(warningData->fuelLowPtr) = TRUE;    // flash 2 second period
     }
 
-    print_format("\n");
+    //print_format("\n");
 
     // these control flashing behavior for lights
     flash_display("BATTERY", 0, 40, 2, color_battery, &parityBattery, &nextChangeBattery, BATTERY_FLASH_PERIOD);

@@ -10,7 +10,7 @@ void consoleDisplayFunction(void* data) {
     consoleDisplayData* displayData = (consoleDisplayData*) data;
 
     // for debugging
-    print_format("SUBSYSTEM CONSOLE:\n");
+    //print_format("SUBSYSTEM CONSOLE:\n");
 
     // obtain information to convert to strings
     Bool solarPanelState = *(displayData->solarPanelStatePtr);

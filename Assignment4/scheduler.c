@@ -13,6 +13,8 @@ void reschedule() {
     addToHead(&queue, &tcbs[POWER_DATA_TCB]);
   }
 
+  addToHead(&queue, &tcbs[DISTANCE_TRANSPORT_DATA_TCB]);
+
   addToHead(&queue, &tcbs[THRUSTER_DATA_TCB]);
   addToHead(&queue, &tcbs[WARNING_DATA_TCB]);
   addToHead(&queue, &tcbs[DISPLAY_DATA_TCB]);

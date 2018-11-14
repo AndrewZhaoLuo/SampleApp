@@ -58,6 +58,7 @@ void loop() {
   batteryConnectionInterrupt();
   solarPanelConnectionInterrupt();
   solarPanelSafetyInterrupt();
+  transportDistFreqInterrupt();
 
 /*
   Serial.print("Battery: ");

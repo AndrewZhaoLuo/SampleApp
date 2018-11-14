@@ -77,10 +77,10 @@ void solarPanelControlFunction(void* data) {
         *(panelData -> solarPanelRetract) = FALSE;
     }
 
-    print_format("\tInc: %d, Dec: %d", inc, dec);
+    /*print_format("\tInc: %d, Dec: %d", inc, dec);
     print_format("\tDeploying: %d, Retracting: %d", *(panelData -> solarPanelDeploy), *(panelData -> solarPanelRetract));
     print_format("\tState: %d", *(panelData -> solarPanelState));
-    print_format("\tMove-ok: %d", solarPanelMoveFlag);
+    print_format("\tMove-ok: %d", solarPanelMoveFlag);*/
 
     long long curTime = getTimeMillis();
 

@@ -17,6 +17,7 @@
 #define WHITE   0xFFFF
 #define ORANGE  0xFFA0
 
+#define DISTANCE_TRANSPORT_PIN A10
 #define PANEL_CONNECTION_PIN A11
 #define PANEL_INTERRUPT_PIN A12
 #define BATTERY_IN_PIN A13
@@ -31,6 +32,7 @@
 #define VEHICLE_DATA_TCB 5
 #define PANEL_DATA_TCB 6
 #define KEYPAD_DATA_TCB 7
+#define DISTANCE_TRANSPORT_DATA_TCB 8
 
 #include "bool.h"
 #include "thrusterSubsystem.h"
@@ -47,7 +49,7 @@
 #include "transportDistanceSubsystem.h"
 
 // length of the TCB queue
-#define LENGTH 8
+#define LENGTH 9
 
 // kernels and stuff
 TCB tcbs[LENGTH];
@@ -83,6 +85,8 @@ volatile long long batteryConnectionTimestamp;
 volatile Bool solarPanelConnectedFlag;
 volatile Bool solarPanelMoveFlag;
 
+volatile Bool transportDistanceFreqConnectedFlag;
+
 // static allocation for structs to use
 powerSubsystemData powerData;
 thrusterSubsystemData thrusterData;
@@ -103,4 +107,5 @@ void initialize();
 void batteryConnectionInterrupt();
 void solarPanelConnectionInterrupt();
 void solarPanelSafetyInterrupt();
+void transportDistFreqInterrupt();
 #endif // GLOBALS_H_INCLUDED

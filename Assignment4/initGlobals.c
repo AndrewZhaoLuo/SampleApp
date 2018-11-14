@@ -31,6 +31,15 @@ void solarPanelSafetyInterrupt() {
   }
 }
 
+void transportDistFreqInterrupt(){
+  int val = digitalRead(47);
+  if (val == HIGH) {
+    transportDistanceFreqConnectedFlag = TRUE;
+  } else {
+    transportDistanceFreqConnectedFlag = FALSE;
+  }
+}
+
 void initPowerData() {
     powerData.solarPanelStatePtr = &solarPanelState;
     powerData.batteryLevelPtr = &batteryLevel;
@@ -137,7 +146,7 @@ void initialize(){
     solarPanelDriveDec = FALSE;
     batteryLevelPtr = powerBuf.buffer;
     batteryTemp = 33;
-    transportDist = 2000;
+    transportDist = 1000;
     timeIntervalBuffer = timeIntervalBuf.buffer;
     meterDistanceBuffer = meterDistanceBuf.buffer;
     
@@ -147,6 +156,7 @@ void initialize(){
     batteryConnectionTimestamp = 0;
     solarPanelConnectedFlag = FALSE;
     solarPanelMoveFlag = TRUE;
+    transportDistanceFreqConnectedFlag = FALSE;
 
     // Initialize data structs
     initPowerData();
@@ -173,6 +183,7 @@ void initialize(){
     initTCB(&tcbs[VEHICLE_DATA_TCB], (void*)&vehicleData, vehicleCommsFunction, PRIORITY_HIGH);
     initTCB(&tcbs[PANEL_DATA_TCB], (void*)&panelData, solarPanelControlFunction, PRIORITY_HIGH);
     initTCB(&tcbs[KEYPAD_DATA_TCB], (void*)&keyData, keypadFunction, PRIORITY_HIGH);
+    initTCB(&tcbs[DISTANCE_TRANSPORT_DATA_TCB], (void*)&transportData, transportDistanceFunction, PRIORITY_LOW);
 
     initTaskQueue(&queue);
 }

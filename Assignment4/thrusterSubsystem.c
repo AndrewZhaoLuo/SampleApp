@@ -35,7 +35,7 @@ void thrusterSubsystemFunction(void* data) {
 
     long storePrint = store * 1000000;
     long fuelUsedPrint = fuelUsed * 1000000;
-    print_format("SUBSYSTEM THRUSTER\n");
+    /*print_format("SUBSYSTEM THRUSTER\n");
     print_format("\tLeft %d, Right %d, Up %d, Down %d \n\tMagnitude %d, Duration %d\n\tFuel Used Actual (millionths) %ld, Store (millionths) %ld, Rounded Used %d\n\tCommand 0x%X\n",
-           left, right, up, down, magnitude, duration, fuelUsedPrint, storePrint, roundedFuelUsed, cmd);
+           left, right, up, down, magnitude, duration, fuelUsedPrint, storePrint, roundedFuelUsed, cmd);*/
 }

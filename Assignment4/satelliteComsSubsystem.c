@@ -24,6 +24,6 @@ void satelliteComsFunction(void* data) {
     }
 
     // for debugging
-    print_format("SUBSYSTEM SATELLITE:\n");
-    print_format("\tFuel Low Warning %d\n\tBattery Low Warning %d\n", *(comsData->fuelLowPtr), *(comsData->batteryLowPtr));
+    //print_format("SUBSYSTEM SATELLITE:\n");
+    //print_format("\tFuel Low Warning %d\n\tBattery Low Warning %d\n", *(comsData->fuelLowPtr), *(comsData->batteryLowPtr));
 }
