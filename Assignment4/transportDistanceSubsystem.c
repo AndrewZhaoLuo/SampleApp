@@ -37,22 +37,28 @@ void transportDistanceFunction(void* data) {
       // For debugging
       print_format("Count: %d\n", count); 
 
-      // Calculate time elapsed in seconds
-      unsigned long long duration = (endTime-startTime)/(1000.0);
+      // Calculate time elapsed
+      unsigned long duration = ((endTime-startTime));
 
       // For debugging
-      print_format("Duration: %llu\n", duration);
+      print_format("Duration millis: %lu\n", duration);
 
       // TODO: push duration/count to time interval buffer
 
-      unsigned long long freq = ((unsigned long long) count)/duration;
+      unsigned long freq = ((unsigned long) count)/(duration/1000.0);
 
       // For debugging
-      print_format("Frequency: %llu\n", freq);
+      print_format("Frequency: %lu\n", freq);
+
+      print_format("Frequency converted to unsigned short: %u\n", (unsigned short) freq);
 
       // If the transport vehicle is within 1 km, we know we register the signal
       if (freq <= 1000.0) {
-        *(transportData->transportDistPtr) = freq;
+        print_format("Entered loop should update dist\n");
+        
+        *(transportData->transportDistPtr) = ((unsigned short) freq);
+
+        print_format("Transport dist global: %u\n", *(transportData->transportDistPtr));
 
         // TODO: push this distance to the transport distance buffer if greater than 10% from previous value
         /*if(std::abs(transportDistBuffer.getNthPreviousSample(0) - freq)/transportDistBuffer.getNthPreviousSample(0) >= 0.10){
