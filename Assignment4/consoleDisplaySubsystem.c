@@ -18,7 +18,7 @@ void consoleDisplayFunction(void* data) {
     unsigned short fuelLevel = *(displayData->fuelLevelPtr);
     unsigned short powerConsumption = *(displayData->powerConsumptionPtr);
     unsigned short batteryTemp = *(displayData->batteryTempPtr);
-    unsigned short transportDist = *(displayData->transportDistPtr);
+    unsigned short transportDistVar = *(displayData->transportDistPtr);
 
     // Create solar panel state string
     char* state;
@@ -47,11 +47,11 @@ void consoleDisplayFunction(void* data) {
 
     // Create transport distance string
     char transport[MAX_VALUE_WIDTH];
-    snprintf(transport, MAX_VALUE_WIDTH, "%u", transportDist);
+    snprintf(transport, MAX_VALUE_WIDTH, "%u", transportDistVar);
 
     // Draw a black rectangle on the top half of the screen to refresh it
     tft_set_color(BLACK);
-    tft_fill_rect(TEXT_ALIGN_X, Y_STATE, tft_get_width(), Y_POWER, BLACK);
+    tft_fill_rect(TEXT_ALIGN_X, Y_STATE, tft_get_width(), Y_DIST, BLACK);
 
     tft_set_fontsize(FONTSIZE);
     tft_set_color(GREEN);

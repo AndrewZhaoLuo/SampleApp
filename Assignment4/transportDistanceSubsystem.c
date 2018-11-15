@@ -9,12 +9,12 @@ void transportDistanceFunction(void* data) {
     transportDistanceData* transportData = (transportDistanceData*) data;
 
     // For debugging
-    print_format("Transport dist connection flag: ");
+    /*print_format("Transport dist connection flag: ");
     if (transportDistanceFreqConnectedFlag) {
       print_format("TRUE\n");
     } else {
       print_format("FALSE\n");
-    }
+    }*/
 
     if(transportDistanceFreqConnectedFlag) {
       int curr = 0;
@@ -34,36 +34,27 @@ void transportDistanceFunction(void* data) {
       }
       unsigned long long endTime = getTimeMillis();
 
-      // For debugging
-      print_format("Count: %d\n", count); 
-
-      // Calculate time elapsed
+      // Calculate time elapsed in millis
       unsigned long duration = ((endTime-startTime));
 
-      // For debugging
-      print_format("Duration millis: %lu\n", duration);
+      // TODO: push timeInterval to time interval buffer (convert to seconds)
 
-      // TODO: push duration/count to time interval buffer
+      double timeInterval = duration/((double) count * 1000.0);
 
-      unsigned long freq = ((unsigned long) count)/(duration/1000.0);
-
-      // For debugging
-      print_format("Frequency: %lu\n", freq);
-
-      print_format("Frequency converted to unsigned short: %u\n", (unsigned short) freq);
+      int miles = timeInterval * 200000.0;
 
       // If the transport vehicle is within 1 km, we know we register the signal
-      if (freq <= 1000.0) {
-        print_format("Entered loop should update dist\n");
+      if (miles <= 1000.0) {
         
-        *(transportData->transportDistPtr) = ((unsigned short) freq);
-
-        print_format("Transport dist global: %u\n", *(transportData->transportDistPtr));
+        *(transportData->transportDistPtr) = ((unsigned short) miles);
 
         // TODO: push this distance to the transport distance buffer if greater than 10% from previous value
         /*if(std::abs(transportDistBuffer.getNthPreviousSample(0) - freq)/transportDistBuffer.getNthPreviousSample(0) >= 0.10){
           transportDistBuffer.pushSample(freq);
         }*/
+      } else {
+        // It is farther away, so set the distance to 1000 miles
+        *(transportData->transportDistPtr) = 1000;
       }
     }
     

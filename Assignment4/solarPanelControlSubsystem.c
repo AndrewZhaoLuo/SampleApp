@@ -39,7 +39,7 @@ void drivePWM(unsigned int dutyCycle, long long curTime, int pin) {
 }
 
 void solarPanelControlFunction(void* data) {
-    print_format("SUBSYSTEM SOLAR PANEL\n");
+    //print_format("SUBSYSTEM SOLAR PANEL\n");
     solarPanelControlData* panelData = (solarPanelControlData*) data;
 
     // first make sure panel is connected
@@ -87,10 +87,10 @@ void solarPanelControlFunction(void* data) {
     // drive PWM, drive forward if your state is retracted
     // and backward if you were fully deployed
     if (*(panelData -> solarPanelState) && solarPanelMoveFlag && *(panelData -> solarPanelRetract)) {
-        print_format("\tMOTOR DRIVE BACKWARD: %d", *panelData -> motorDriveSpeed);
+        //print_format("\tMOTOR DRIVE BACKWARD: %d", *panelData -> motorDriveSpeed);
         drivePWM(*panelData -> motorDriveSpeed, curTime, MOTOR_BACKWARD_PWM_PIN);
     } else if (solarPanelMoveFlag && *(panelData -> solarPanelDeploy)) {
-        print_format("\tMOTOR DRIVE FORWARD: %d", *panelData -> motorDriveSpeed);
+        //print_format("\tMOTOR DRIVE FORWARD: %d", *panelData -> motorDriveSpeed);
         drivePWM(*panelData -> motorDriveSpeed, curTime, MOTOR_FORWARD_PWM_PIN);
     } else {
         drivePWM(0, curTime, MOTOR_FORWARD_PWM_PIN);
