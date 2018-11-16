@@ -38,10 +38,12 @@ void initPowerData() {
     powerData.powerGenerationPtr = &powerGeneration;
     powerData.callCounter = 0;
     powerData.increaseConsumption = TRUE;
-
     powerData.motorDriveSpeed = &motorSpeed;
     powerData.solarPanelRetract = &solarPanelRetract;
     powerData.solarPanelDeploy = &solarPanelDeploy;
+    // Buffers
+    powerData.batteryBuff= &batteryBuff;
+    powerData.batteryTempBuff = &batteryTempBuff;
 }
 
 void initThrusterData() {
@@ -98,17 +100,6 @@ void initKeyData() {
     keyData.solarPanelDriveInc = &solarPanelDriveInc;
 }
 
-void initCircBuf() {
-  circBuf.head = 0;
-  circBuf.tail = 0;
-  circBuf.endIndex = 15;
-  circBuf.empty = TRUE;
-  int i =0;
-  for(i = 0; i < 16; i++){
-    circBuf.buffer[i] = 0;
-  }
-}
-
 void initialize(){
     // Initialize globals
     thrustCommand = 0;
@@ -134,6 +125,10 @@ void initialize(){
     solarPanelConnectedFlag = FALSE;
     solarPanelMoveFlag = TRUE;
 
+    // Initalize data buffers
+    initBuffer(batteryBuff, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer
+    initBuffer(batteryTempBuff, 16 + BUFFER_METADATA_SIZE);
+
     // Initialize data structs
     initPowerData();
     initThrusterData();
@@ -142,7 +137,6 @@ void initialize(){
     initWarningData();
     initVehicleData();
     initPanelData();
-    initCircBuf();
     initKeyData();
 
     // initialize the various data structures for the kernel
