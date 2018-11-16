@@ -9,12 +9,12 @@ void transportDistanceFunction(void* data) {
     transportDistanceData* transportData = (transportDistanceData*) data;
 
     // For debugging
-    /*print_format("Transport dist connection flag: ");
+    print_format("Transport dist connection flag: ");
     if (transportDistanceFreqConnectedFlag) {
       print_format("TRUE\n");
     } else {
       print_format("FALSE\n");
-    }*/
+    }
 
     if(transportDistanceFreqConnectedFlag) {
       int curr = 0;
@@ -34,24 +34,47 @@ void transportDistanceFunction(void* data) {
       }
       unsigned long long endTime = getTimeMillis();
 
+      print_format("Count %d\n", count);
+
       // Calculate time elapsed in millis
       unsigned long duration = ((endTime-startTime));
 
-      // TODO: push timeInterval to time interval buffer (convert to seconds)
+      // Calculate time interval between peaks and push to interval buffer (millis)
+      double timeInterval = duration/((double) count);
 
-      double timeInterval = duration/((double) count * 1000.0);
+      print_format("Time interval: %d\n", (int) timeInterval);
+      
+      pushSample(*(transportData->timeIntervalBuffer), (int) timeInterval);
 
-      int miles = timeInterval * 200000.0;
+      double durationMS = ((double) duration)/1000.0;
+
+      double frequency = ((double) count)/ durationMS;
+
+      // For debugging
+      print_format("Frequency: %d\n", (int) frequency);
+
+      int meters;
+      if(frequency > 2000) {
+        meters = 100;
+      } else if(frequency < 100){
+        meters = 2000;
+      } else {
+        meters = 2100 - ((int) frequency);
+      }
+
+      print_format("meters: %d\n", meters);
 
       // If the transport vehicle is within 1 km, we know we register the signal
-      if (miles <= 1000.0) {
+      if (meters <= 1000.0) {
         
-        *(transportData->transportDistPtr) = ((unsigned short) miles);
+        *(transportData->transportDistPtr) = ((unsigned short) meters);
 
-        // TODO: push this distance to the transport distance buffer if greater than 10% from previous value
-        /*if(std::abs(transportDistBuffer.getNthPreviousSample(0) - freq)/transportDistBuffer.getNthPreviousSample(0) >= 0.10){
-          transportDistBuffer.pushSample(freq);
-        }*/
+        // Push this distance to the transport distance buffer if greater than 10% from previous value
+        int previousSample = getNthPreviousSample(0, *(transportData->meterDistanceBuffer));
+        double percentFromLast = ((double)(previousSample - meters))/((double) previousSample);
+        if(percentFromLast >= 0.10 || percentFromLast <= -0.10){
+          pushSample(*(transportData->meterDistanceBuffer), meters);
+        }
       } else {
         // It is farther away, so set the distance to 1000 miles
         *(transportData->transportDistPtr) = 1000;

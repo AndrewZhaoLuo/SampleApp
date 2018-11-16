@@ -1,5 +1,6 @@
 #include "circularBuffer.h"
 #include "globals.h"
+#include "print_format.h"
 
 // void pushBack(const int item) {
 //   if(!(circBuf.empty)){
@@ -35,7 +36,7 @@ void pushSample (unsigned int buffer[], int data) {
 // Returns Nth previous sample (n >= 0). n = 0 is last sample, n = 1 is prevous sample.
 int getNthPreviousSample (unsigned int buffer[], int n) {
   if (n < 0) {
-    printf("getNthPreviousSample: n cannot be negative. Output will be bad.");
+    print_format("getNthPreviousSample: n cannot be negative. Output will be bad.");
   }
   int curIndex = buffer[BUFFER_INSERT_INDEX];
   int size = buffer[BUFFER_SIZE_INDEX];
@@ -58,9 +59,9 @@ void initBuffer(unsigned int buffer[], int size) {
 }
 
 void printBuffer(unsigned int buffer[], int size) {
-    printf("\n");
-    for (int i = 0; i < size; i++) printf("%d ", buffer[i]);
-    printf("\n");
+    print_format("\n");
+    for (int i = 0; i < size; i++) print_format("%d ", buffer[i]);
+    print_format("\n");
 }
 
 // Empty buffer is defined as 0 in index 2 -> size - 1
@@ -79,21 +80,21 @@ int testBuffer(int size, int n) {
     unsigned int buffer[size];
     initBuffer(buffer, size);
     printBuffer(buffer, size);
-    printf("\nisBufferEmpty?: %d\n", isBufferEmpty(buffer, size));
+    print_format("\nisBufferEmpty?: %d\n", isBufferEmpty(buffer, size));
 
-    printf("\nInitialized\n");
+    //printf("\nInitialized\n");
     for (int i = 1; i < size * 3; i ++) {
-        printf("\n\n");
-        printf("Inserting Sample: %d", i);
+        print_format("\n\n");
+        print_format("Inserting Sample: %d", i);
         pushSample (buffer, i);
         printBuffer(buffer, size);
         int prev = getNthPreviousSample(buffer, n);
         int correct = prev == (i - n);
-        printf("Previous Sample: %d\n", prev);
+        print_format("Previous Sample: %d\n", prev);
         if (!correct) {
-            printf("INCORRECT PREVIOUS SAMPLE: XXXXXXXXXXXXXXXXXXXXXXXXX");
+            print_format("INCORRECT PREVIOUS SAMPLE: XXXXXXXXXXXXXXXXXXXXXXXXX");
         }
     }
-    printf("\nisBufferEmpty?: %d\n", isBufferEmpty(buffer, size));
+    print_format("\nisBufferEmpty?: %d\n", isBufferEmpty(buffer, size));
    return 0;
 }

@@ -52,8 +52,8 @@ void initPowerData() {
     powerData.solarPanelRetract = &solarPanelRetract;
     powerData.solarPanelDeploy = &solarPanelDeploy;
     // Buffers
-    powerData.batteryBuff= &batteryBuff;
-    powerData.batteryTempBuff = &batteryTempBuff;
+    powerData.batteryBuff= &batteryBuf;
+    powerData.batteryTempBuff = &batteryTempBuf;
 }
 
 void initThrusterData() {
@@ -96,6 +96,7 @@ void initWarningData() {
 void initVehicleData() {
   vehicleData.vehicleCommandPtr = &vehicleCommand;
   vehicleData.vehicleResponsePtr = &vehicleResponse;
+  vehicleData.transportDistPtr = &transportDist;
 }
 
 void initPanelData() {
@@ -113,8 +114,8 @@ void initKeyData() {
 }
 
 void initTransportData(){
-  transportData.timeIntervalBuffer = timeIntervalBuf;
-  transportData.meterDistanceBuffer = meterDistanceBuf;
+  transportData.timeIntervalBuffer = &timeIntervalBuf;
+  transportData.meterDistanceBuffer = &meterDistanceBuf;
   transportData.transportDistPtr = &transportDist;
 }
 
@@ -135,13 +136,13 @@ void initialize(){
     vehicleResponse = '\0';
     solarPanelDriveInc = FALSE;
     solarPanelDriveDec = FALSE;
-    batteryLevelPtr = powerBuf.buffer;
+    //batteryLevelPtr = powerBuf;
     batteryTemp = 33;
     transportDist = 1000;
 
     // Initalize data buffers
-    initBuffer(batteryBuff, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer
-    initBuffer(batteryTempBuff, 16 + BUFFER_METADATA_SIZE);
+    initBuffer(batteryBuf, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer
+    initBuffer(batteryTempBuf, 16 + BUFFER_METADATA_SIZE);
     initBuffer(powerBuf, 16 + BUFFER_METADATA_SIZE);
     initBuffer(timeIntervalBuf, 16 + BUFFER_METADATA_SIZE);
     initBuffer(meterDistanceBuf, 8 + BUFFER_METADATA_SIZE);

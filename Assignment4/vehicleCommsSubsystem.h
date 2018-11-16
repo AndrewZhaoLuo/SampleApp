@@ -4,6 +4,7 @@
 typedef struct vehicleCommsDataStruct {
     char* vehicleCommandPtr;
     char* vehicleResponsePtr;
+    unsigned short* transportDistPtr;
 } vehicleCommsData;
 
 void vehicleCommsFunction(void* data);

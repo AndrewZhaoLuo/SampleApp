@@ -40,8 +40,8 @@ void vehicleCommsFunction(void* data) {
       Serial1.write('K');
     }
 
-    // Request to dock
-    if(response == 'd' || response == 'D'){
+    // Request to dock: only confirm if vehicle is close to station
+    if((response == 'd' && *(vehicleData->transportDistPtr) <= 102) || (response == 'D' && *(vehicleData->transportDistPtr) <= 102)){
       Serial1.write('C');
     }
   }

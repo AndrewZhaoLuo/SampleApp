@@ -72,7 +72,7 @@ Bool fuelLow;
 Bool batteryLow;
 char vehicleCommand;
 char vehicleResponse;
-unsigned int* batteryLevelPtr;
+//unsigned int* batteryLevelPtr;
 unsigned short batteryTemp;
 unsigned short transportDist;
 
