@@ -78,6 +78,10 @@ volatile long long batteryConnectionTimestamp;
 volatile Bool solarPanelConnectedFlag;
 volatile Bool solarPanelMoveFlag;
 
+// Data Buffers
+int batteryBuff[16 + BUFFER_METADATA_SIZE];
+int batteryTempBuff[16 + BUFFER_METADATA_SIZE];
+
 // static allocation for structs to use
 powerSubsystemData powerData;
 thrusterSubsystemData thrusterData;
@@ -86,7 +90,6 @@ consoleDisplayData displayData;
 warningAlarmData warningData;
 vehicleCommsData vehicleData;
 solarPanelControlData panelData;
-circularBuffer circBuf;
 keypadData keyData;
 
 void initialize();
