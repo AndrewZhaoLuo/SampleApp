@@ -97,7 +97,7 @@ int readBatteryLevel() {
 	int batteryADC = analogRead(BATTERY_IN_PIN);
 	int batteryLevel = ((batteryADC / 1023.0) * VOLTAGE_SCALAR);
 	// Insert Value into buffer
-  pushBack(&powerBuf, batteryLevel);
+  //pushBack(&powerBuf, batteryLevel);
 	return batteryLevel;
 }
 
