@@ -51,6 +51,9 @@ void initPowerData() {
     powerData.motorDriveSpeed = &motorSpeed;
     powerData.solarPanelRetract = &solarPanelRetract;
     powerData.solarPanelDeploy = &solarPanelDeploy;
+    // Buffers
+    powerData.batteryBuff= &batteryBuff;
+    powerData.batteryTempBuff = &batteryTempBuff;
 }
 
 void initThrusterData() {
@@ -110,22 +113,10 @@ void initKeyData() {
 }
 
 void initTransportData(){
-  transportData.timeIntervalBuffer = timeIntervalBuffer;
-  transportData.meterDistanceBuffer = meterDistanceBuffer;
+  transportData.timeIntervalBuffer = timeIntervalBuf;
+  transportData.meterDistanceBuffer = meterDistanceBuf;
   transportData.transportDistPtr = &transportDist;
 }
-
-void initCircBuf(circularBuffer* circBuf) {
-  (*circBuf).head = 0;
-  (*circBuf).tail = 0;
-  (*circBuf).endIndex = 15;
-  (*circBuf).empty = TRUE;
-  int i =0;
-  for(i = 0; i < 16; i++){
-    (*circBuf).buffer[i] = 0;
-  }
-}
-
 
 void initialize(){
     // Initialize globals
@@ -147,9 +138,13 @@ void initialize(){
     batteryLevelPtr = powerBuf.buffer;
     batteryTemp = 33;
     transportDist = 1000;
-    timeIntervalBuffer = timeIntervalBuf.buffer;
-    meterDistanceBuffer = meterDistanceBuf.buffer;
-    
+
+    // Initalize data buffers
+    initBuffer(batteryBuff, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer
+    initBuffer(batteryTempBuff, 16 + BUFFER_METADATA_SIZE);
+    initBuffer(powerBuf, 16 + BUFFER_METADATA_SIZE);
+    initBuffer(timeIntervalBuf, 16 + BUFFER_METADATA_SIZE);
+    initBuffer(meterDistanceBuf, 8 + BUFFER_METADATA_SIZE);
 
     // interrupt flags
     batteryConnectedFlag = FALSE;
@@ -166,10 +161,7 @@ void initialize(){
     initWarningData();
     initVehicleData();
     initPanelData();
-    initCircBuf(&powerBuf);
     initKeyData();
-    initCircBuf(&timeIntervalBuf);
-    initCircBuf(&meterDistanceBuf);
     initTransportData();
 
     // initialize the various data structures for the kernel

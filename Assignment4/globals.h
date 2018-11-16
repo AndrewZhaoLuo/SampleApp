@@ -75,8 +75,13 @@ char vehicleResponse;
 unsigned int* batteryLevelPtr;
 unsigned short batteryTemp;
 unsigned short transportDist;
-unsigned int* timeIntervalBuffer;
-unsigned int* meterDistanceBuffer;
+
+// data buffers
+unsigned int timeIntervalBuf[16 + BUFFER_METADATA_SIZE];
+unsigned int meterDistanceBuf[8 + BUFFER_METADATA_SIZE];
+unsigned int batteryBuf[16 + BUFFER_METADATA_SIZE];
+unsigned int batteryTempBuf[16 + BUFFER_METADATA_SIZE];
+unsigned int powerBuf[16 + BUFFER_METADATA_SIZE];
 
 // interrupt flags for ISRs
 volatile Bool batteryConnectedFlag;
@@ -95,11 +100,8 @@ consoleDisplayData displayData;
 warningAlarmData warningData;
 vehicleCommsData vehicleData;
 solarPanelControlData panelData;
-circularBuffer powerBuf;
 keypadData keyData;
 transportDistanceData transportData;
-circularBuffer timeIntervalBuf;
-circularBuffer meterDistanceBuf;
 
 void initialize();
 
