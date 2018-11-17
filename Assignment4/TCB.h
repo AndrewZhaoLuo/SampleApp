@@ -2,7 +2,11 @@
 #define TCB_H_INCLUDED
 
 // priority levels are like so: REAL_TIME > HIGH > LOW
-typedef enum {PRIORITY_REAL_TIME, PRIORITY_HIGH, PRIORITY_LOW} TaskPriority;
+typedef enum {PRIORITY_REAL_TIME = 1,
+              PRIORITY_CRTITICAL = 2,
+              PRIORITY_HIGH = 3,
+              PRIORITY_MEDIUM = 4,
+              PRIORITY_LOW = 5, } TaskPriority;
 
 typedef struct Task
 {
