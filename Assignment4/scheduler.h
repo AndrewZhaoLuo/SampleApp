@@ -2,7 +2,7 @@
 #define SCHEDULER_H_INCLUDED
 
 // length of the cycles in milliseconds
-#define MAJOR_CYCLE 5000
+#define MAJOR_CYCLE 1000
 #define MINOR_CYCLE 20
 
 #include "taskqueue.h"

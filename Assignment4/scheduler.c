@@ -47,11 +47,13 @@ void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
     }
 
     // go through TCB queue, executing things if they are high enough priority
-    for (int target_priority = 1; target_priority <= 5; target_priority++) {
-        while (queue -> length > 0) {
+    while (queue -> length > 0) {
+        for (int target_priority = 1; target_priority <= 5; target_priority++) {
+            if (queue -> length == 0) break;
+
             TCB* curTCB = getNextTCB(queue);
 
-            if (curTCB -> priority != target_priority) {
+            if (curTCB -> priority > target_priority) {
                 addToTail(queue, curTCB);
                 continue;
             }
@@ -63,10 +65,14 @@ void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
                 invoke(curTCB);
             } else if (level == CYCLE_REAL_TIME && curTCB -> priority == PRIORITY_REAL_TIME) {
                 invoke(curTCB);
+            } else {
+                addToTail(queue, curTCB);
             }
         }
     }
 
+    print_format("RESCHEDULE\n");
+    delay(1000);
     reschedule();
 }
 
