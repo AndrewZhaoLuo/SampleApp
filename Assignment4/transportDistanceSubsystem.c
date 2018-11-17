@@ -43,8 +43,8 @@ void transportDistanceFunction(void* data) {
       double timeInterval = duration/((double) count);
 
       print_format("Time interval: %d\n", (int) timeInterval);
-      
-      pushSample(*(transportData->timeIntervalBuffer), (int) timeInterval);
+
+      pushSample(transportData->timeIntervalBuffer, (int) timeInterval);
 
       double durationMS = ((double) duration)/1000.0;
 
@@ -66,19 +66,19 @@ void transportDistanceFunction(void* data) {
 
       // If the transport vehicle is within 1 km, we know we register the signal
       if (meters <= 1000.0) {
-        
+
         *(transportData->transportDistPtr) = ((unsigned short) meters);
 
         // Push this distance to the transport distance buffer if greater than 10% from previous value
-        int previousSample = getNthPreviousSample(0, *(transportData->meterDistanceBuffer));
+        int previousSample = getNthPreviousSample(transportData->meterDistanceBuffer, 0);
         double percentFromLast = ((double)(previousSample - meters))/((double) previousSample);
         if(percentFromLast >= 0.10 || percentFromLast <= -0.10){
-          pushSample(*(transportData->meterDistanceBuffer), meters);
+          pushSample(transportData->meterDistanceBuffer, meters);
         }
       } else {
         // It is farther away, so set the distance to 1000 miles
         *(transportData->transportDistPtr) = 1000;
       }
     }
-    
+
 }

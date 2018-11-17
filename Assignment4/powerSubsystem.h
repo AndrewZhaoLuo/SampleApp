@@ -43,8 +43,8 @@ typedef struct powerSubsystemDataStruct {
     Bool* solarPanelDeploy;
     Bool* solarPanelRetract;
     int* motorDriveSpeed;
-    int** batteryBuff; // 16-Sample buffer
-    int** batteryTempBuff;
+    unsigned int* batteryBuff; // 16-Sample buffer
+    unsigned int* batteryTempBuff;
 
 } powerSubsystemData;
 

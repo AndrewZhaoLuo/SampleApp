@@ -52,8 +52,8 @@ void initPowerData() {
     powerData.solarPanelRetract = &solarPanelRetract;
     powerData.solarPanelDeploy = &solarPanelDeploy;
     // Buffers
-    powerData.batteryBuff= &batteryBuf;
-    powerData.batteryTempBuff = &batteryTempBuf;
+    powerData.batteryBuff= batteryBuf;
+    powerData.batteryTempBuff = batteryTempBuf;
 }
 
 void initThrusterData() {
@@ -114,8 +114,8 @@ void initKeyData() {
 }
 
 void initTransportData(){
-  transportData.timeIntervalBuffer = &timeIntervalBuf;
-  transportData.meterDistanceBuffer = &meterDistanceBuf;
+  transportData.timeIntervalBuffer = timeIntervalBuf;
+  transportData.meterDistanceBuffer = meterDistanceBuf;
   transportData.transportDistPtr = &transportDist;
 }
 
