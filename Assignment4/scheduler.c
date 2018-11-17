@@ -71,8 +71,6 @@ void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
         }
     }
 
-    print_format("RESCHEDULE\n");
-    delay(1000);
     reschedule();
 }
 
