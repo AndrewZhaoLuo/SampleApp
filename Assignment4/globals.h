@@ -33,6 +33,7 @@
 #define PANEL_DATA_TCB 6
 #define KEYPAD_DATA_TCB 7
 #define DISTANCE_TRANSPORT_DATA_TCB 8
+#define IMAGE_CAPTURE_DATA_TCB 9
 
 #include "bool.h"
 #include "thrusterSubsystem.h"
@@ -47,9 +48,10 @@
 #include "TCB.h"
 #include "scheduler.h"
 #include "transportDistanceSubsystem.h"
+#include "imageCaptureSubsystem.h"
 
 // length of the TCB queue
-#define LENGTH 9
+#define LENGTH 10
 
 // kernels and stuff
 TCB tcbs[LENGTH];
@@ -72,7 +74,6 @@ Bool fuelLow;
 Bool batteryLow;
 char vehicleCommand;
 char vehicleResponse;
-//unsigned int* batteryLevelPtr;
 unsigned short batteryTemp;
 unsigned short transportDist;
 
@@ -82,6 +83,9 @@ unsigned int meterDistanceBuf[8 + BUFFER_METADATA_SIZE];
 unsigned int batteryBuf[16 + BUFFER_METADATA_SIZE];
 unsigned int batteryTempBuf[16 + BUFFER_METADATA_SIZE];
 unsigned int powerBuf[16 + BUFFER_METADATA_SIZE];
+signed int fft_in[FFT_BUFFER_SIZE + BUFFER_METADATA_SIZE];
+signed int fft_out[FFT_BUFFER_SIZE + BUFFER_METADATA_SIZE];
+int freq_buffer[FREQUENCY_BUFFER + BUFFER_METADATA_SIZE];
 
 // interrupt flags for ISRs
 volatile Bool batteryConnectedFlag;
@@ -102,6 +106,7 @@ vehicleCommsData vehicleData;
 solarPanelControlData panelData;
 keypadData keyData;
 transportDistanceData transportData;
+imageCaptureData imageData;
 
 void initialize();
 

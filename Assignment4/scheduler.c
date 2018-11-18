@@ -24,30 +24,31 @@ void reschedule() {
   addToHead(&queue, &tcbs[THRUSTER_DATA_TCB]);
   addToHead(&queue, &tcbs[WARNING_DATA_TCB]);
   addToHead(&queue, &tcbs[VEHICLE_DATA_TCB]);
+  addToHead(&queue, &tcbs[IMAGE_CAPTURE_DATA_TCB]);
 }
 
 // waits until current cycle is over
 void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
-    long long currentTime = getTimeMillis();
-
-    // are we after the completion of a major/minor cycle
-    int isMajor = currentTime >= scheduler -> nextEndMajor;
-    int isMinor = currentTime >= scheduler -> nextEndMinor;
-
-    // set the priority level we should be running tasks on based on
-    // whether we have completed a cycle or not
-    cycleLevel level = CYCLE_REAL_TIME;
-    if (isMinor) {
-        scheduler -> nextEndMinor = currentTime + MINOR_CYCLE;
-        level = CYCLE_MINOR;
-    }
-    if (isMajor) {
-        scheduler -> nextEndMajor = currentTime + MAJOR_CYCLE;
-        level = CYCLE_MAJOR;
-    }
-
-    // go through TCB queue, executing things if they are high enough priority
     while (queue -> length > 0) {
+        long long currentTime = getTimeMillis();
+
+        // are we after the completion of a major/minor cycle
+        int isMajor = currentTime >= scheduler -> nextEndMajor;
+        int isMinor = currentTime >= scheduler -> nextEndMinor;
+
+        // set the priority level we should be running tasks on based on
+        // whether we have completed a cycle or not
+        cycleLevel level = CYCLE_REAL_TIME;
+        if (isMinor) {
+            scheduler -> nextEndMinor = currentTime + MINOR_CYCLE;
+            level = CYCLE_MINOR;
+        }
+        if (isMajor) {
+            scheduler -> nextEndMajor = currentTime + MAJOR_CYCLE;
+            level = CYCLE_MAJOR;
+        }
+
+        // go through TCB queue, executing things if they are high enough priority
         for (int target_priority = 1; target_priority <= 5; target_priority++) {
             if (queue -> length == 0) break;
 

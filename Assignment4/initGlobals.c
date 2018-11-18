@@ -119,6 +119,12 @@ void initTransportData(){
   transportData.transportDistPtr = &transportDist;
 }
 
+void initImageCaptureData() {
+  imageData.fft_in = fft_in;
+  imageData.fft_out = fft_out;
+  imageData.freq_buffer = freq_buffer;
+}
+
 void initialize(){
     // Initialize globals
     thrustCommand = 0;
@@ -146,6 +152,9 @@ void initialize(){
     initBuffer(powerBuf, 16 + BUFFER_METADATA_SIZE);
     initBuffer(timeIntervalBuf, 16 + BUFFER_METADATA_SIZE);
     initBuffer(meterDistanceBuf, 8 + BUFFER_METADATA_SIZE);
+    initBuffer(fft_in, FFT_BUFFER_SIZE + BUFFER_METADATA_SIZE);
+    initBuffer(fft_out, FFT_BUFFER_SIZE + BUFFER_METADATA_SIZE);
+    initBuffer(freq_buffer, FREQUENCY_BUFFER + BUFFER_METADATA_SIZE);
 
     // interrupt flags
     batteryConnectedFlag = FALSE;
@@ -164,6 +173,7 @@ void initialize(){
     initPanelData();
     initKeyData();
     initTransportData();
+    initImageCaptureData();
 
     // initialize the various data structures for the kernel
     initScheduler(&scheduler);
@@ -177,6 +187,7 @@ void initialize(){
     initTCB(&tcbs[PANEL_DATA_TCB], (void*)&panelData, solarPanelControlFunction, PRIORITY_HIGH);
     initTCB(&tcbs[KEYPAD_DATA_TCB], (void*)&keyData, keypadFunction, PRIORITY_HIGH);
     initTCB(&tcbs[DISTANCE_TRANSPORT_DATA_TCB], (void*)&transportData, transportDistanceFunction, PRIORITY_LOW);
+    initTCB(&tcbs[IMAGE_CAPTURE_DATA_TCB], (void*)&imageData, imageCaptureFunction, PRIORITY_HIGH);
 
     initTaskQueue(&queue);
 }
