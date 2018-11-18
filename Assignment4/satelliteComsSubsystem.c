@@ -23,6 +23,10 @@ void satelliteComsFunction(void* data) {
         *(comsData->fuelLowPtr) = FALSE;
     }
 
+    if (*(comsData -> last_freq) != -1){
+        print_format("Image frequency: %d", *comsData -> last_freq);
+        *(comsData -> last_freq) = -1;
+    }
     // for debugging
     //print_format("SUBSYSTEM SATELLITE:\n");
     //print_format("\tFuel Low Warning %d\n\tBattery Low Warning %d\n", *(comsData->fuelLowPtr), *(comsData->batteryLowPtr));

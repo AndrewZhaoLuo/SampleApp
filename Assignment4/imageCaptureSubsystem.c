@@ -26,5 +26,6 @@ void imageCaptureFunction(void* data) {
     unsigned int frequency = (0.0 + m_index) / FFT_BUFFER_SIZE * SAMPLE_FREQUENCY;
 
     pushSample(imageData -> freq_buffer, frequency);
+    *(imageData -> last_freq) = frequency;
     //print_format("COOL FREQUENCY: %d", frequency);
 }

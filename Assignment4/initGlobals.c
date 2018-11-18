@@ -70,6 +70,7 @@ void initComsData() {
     comsData.solarPanelStatePtr = &solarPanelState;
     comsData.fuelLowPtr = &fuelLow;
     comsData.batteryLowPtr = &batteryLow;
+    comsData.last_freq = &last_freq;
 }
 
 void initDisplayData() {
@@ -123,10 +124,12 @@ void initImageCaptureData() {
   imageData.fft_in = fft_in;
   imageData.fft_out = fft_out;
   imageData.freq_buffer = freq_buffer;
+  imageData.last_freq = &last_freq;
 }
 
 void initialize(){
     // Initialize globals
+    last_freq = -1;
     thrustCommand = 0;
     motorSpeed = 25;
     batteryLevel = 100;

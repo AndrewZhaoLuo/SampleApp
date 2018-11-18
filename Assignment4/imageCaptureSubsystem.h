@@ -13,6 +13,8 @@ typedef struct imageCaptureSubsystemStruct {
     signed int* fft_out;
 
     int* freq_buffer;
+
+    int* last_freq;
 } imageCaptureData;
 
 void imageCaptureFunction(void* data);

@@ -60,6 +60,7 @@ Taskqueue queue;
 
 // global variables
 int motorSpeed;
+int last_freq;
 unsigned int thrustCommand;
 unsigned short batteryLevel;
 unsigned short fuelLevel;
