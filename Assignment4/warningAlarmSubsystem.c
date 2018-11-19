@@ -96,16 +96,12 @@ void warningAlarmFunction(void* data) {
     // Flashing Alarm warning
     if (*(warningData->tempAlarmStatePtr) == TEMPERATURE_ALARM_TRIGGERED_UNACKNOWLEDGED){
       unsigned long long timeSinceAlarmTriggered = (getTimeMillis() - *(warningData->tempAlarmTriggeredTimePtr));
-      if (timeSinceAlarmTriggered < 0) {
-        *(warningData->tempAlarmTriggeredTimePtr) = getTimeMillis() + 10000;
-        timeSinceAlarmTriggered = *(warningData->tempAlarmTriggeredTimePtr);
-      }
-      
+     
       //double timeSinceAlarmTriggered = (getTimeMillis() - *(warningData->tempAlarmTriggeredTimePtr)) / 1000.0;
-        print_format("timeSinceAlarmTriggered: %d", timeSinceAlarmTriggered);
+        print_format("timeSinceAlarmTriggered: %llu", timeSinceAlarmTriggered);
         print_format("timeSinceAlarmTriggered > (long long)FIFTEEN_SECONDS: %d", timeSinceAlarmTriggered > (unsigned long long)FIFTEEN_SECONDS);
         
-        if (timeSinceAlarmTriggered > FIFTEN_SECONDS && (timeSinceAlarmTriggered %TEN_SECONDS) <= ALARM_FLASH_PERIOD) { // flash for 5 seconds
+        if ((int)timeSinceAlarmTriggered >= FIFTEEN_SECONDS && ((int)timeSinceAlarmTriggered % TEN_SECONDS) <= ALARM_FLASH_PERIOD) { // flash for 5 seconds
           flash_display("TEMPERATURE", 0, 120, 2, RED, &parityAlarm, &nextChangeAlarm, 500);
           print_format("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Flashing");
         } else {
