@@ -29,6 +29,8 @@ void reschedule() {
 
 // waits until current cycle is over
 void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
+    if (queue -> length == 0) reschedule();
+
     long long currentTime = getTimeMillis();
 
     // are we after the completion of a major/minor cycle
