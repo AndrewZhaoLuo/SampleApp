@@ -30,16 +30,20 @@
 #define SOLAR_PANEL_CONNECTION    51
 #define BATTERY_CONNECTION        53
 
-#define COMS_DATA_TCB       0
-#define THRUSTER_DATA_TCB   1
-#define POWER_DATA_TCB      2
-#define WARNING_DATA_TCB    3
-#define DISPLAY_DATA_TCB    4
-#define VEHICLE_DATA_TCB    5
-#define PANEL_DATA_TCB      6
-#define KEYPAD_DATA_TCB     7
+#define COMS_DATA_TCB               0
+#define THRUSTER_DATA_TCB           1
+#define POWER_DATA_TCB              2
+#define WARNING_DATA_TCB            3
+#define DISPLAY_DATA_TCB            4
+#define VEHICLE_DATA_TCB            5
+#define PANEL_DATA_TCB              6
+#define KEYPAD_DATA_TCB             7
 #define DISTANCE_TRANSPORT_DATA_TCB 8
 #define IMAGE_CAPTURE_DATA_TCB      9
+
+#define BAUD_RATE 9600
+#define DEFAULT_FONT_SIZE 2
+#define DEFAULT_FONT_SIZE_SMALL 1
 
 #include "bool.h"
 #include "thrusterSubsystem.h"
