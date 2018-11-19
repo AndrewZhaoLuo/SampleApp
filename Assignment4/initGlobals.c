@@ -16,11 +16,11 @@ void batteryConnectionInterrupt() {
 
 void batteryTempAcknowledged() {
   int val = digitalRead(BATTERY_TEMP_CONNECTION);
-  print_format("batteryTempAcknowledged checked:");
+  //print_format("batteryTempAcknowledged checked:");
   if (val == HIGH) {
-      print_format("batteryTempAcknowledged checked: is HIGH ************");
+      //print_format("batteryTempAcknowledged checked: is HIGH ************");
     if (tempAlarmState == TEMPERATURE_ALARM_TRIGGERED_UNACKNOWLEDGED) {
-      print_format("batteryTempAcknowledged checked: UPDATED **************************************");
+      //print_format("batteryTempAcknowledged checked: UPDATED **************************************");
       tempAlarmState = TEMPERATURE_ALARM_TRIGGERED_ACKNOWLEDGED;
     }
   }
@@ -168,7 +168,6 @@ void initialize(){
     // temperature alarm
     tempAlarmState = TEMPERATURE_ALARM_NOT_TRIGGERED; // For alarm system
     tempAlarmTriggeredTime = 0;
-    queueCounter = 0;
 
     // Initalize data buffers
     initBuffer(batteryBuf, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer

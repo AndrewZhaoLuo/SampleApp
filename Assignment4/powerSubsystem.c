@@ -91,15 +91,15 @@ void powerSubsystemFunction(void* data){
   }
 
   // Battery Temperature System **************************************************************
-  print_format("A___________________________________________________________");
+  //print_format("A___________________________________________________________");
   int sensorReading1 = convertReadingToMV(measureAnalogPin(BATTERY_TEMPERATURE_SENSOR1_PIN)); //mV
   int sensorReading2 = convertReadingToMV(measureAnalogPin(BATTERY_TEMPERATURE_SENSOR2_PIN)); //mV
-  print_format("sensorReading1: %d, sensorReading2: %d", sensorReading1, sensorReading2);
+  //print_format("sensorReading1: %d, sensorReading2: %d", sensorReading1, sensorReading2);
   int isTempSafe = isTempSensorReadingSafe(sensorReading1, powerData ->batteryTempBuff) && isTempSensorReadingSafe(sensorReading2, powerData ->batteryTempBuff);
 
   // Trigger alarm until acknowledged
   if (!isTempSafe){
-    print_format("ALARM TRIGGERED ****************************************************");
+    //print_format("ALARM TRIGGERED ****************************************************");
     // Trigger Alarm
     if (*(powerData->tempAlarmStatePtr) == TEMPERATURE_ALARM_NOT_TRIGGERED) {
       *(powerData->tempAlarmStatePtr) = TEMPERATURE_ALARM_TRIGGERED_UNACKNOWLEDGED;
@@ -117,8 +117,8 @@ void powerSubsystemFunction(void* data){
   avgTemp = (unsigned short) convertReadingToTemp(avgTemp);
   // Set global battery temp
   *(powerData->batteryTempPtr) = avgTemp;
-  print_format("isTempSafe?: %d, tempAlarmState: %d, tempAlarmTriggeredTime: %d", isTempSafe,*(powerData->tempAlarmStatePtr), *(powerData->tempAlarmTriggeredTimePtr)); 
-  print_format("B___________________________________________________________");
+  //print_format("isTempSafe?: %d, tempAlarmState: %d, tempAlarmTriggeredTime: %d", isTempSafe,*(powerData->tempAlarmStatePtr), *(powerData->tempAlarmTriggeredTimePtr)); 
+  //print_format("B___________________________________________________________");
 
   // for debugging
   /*print_format("SUBSYSTEM POWER\n");

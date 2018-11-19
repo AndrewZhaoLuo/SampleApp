@@ -61,13 +61,6 @@ void loop() {
   transportDistFreqInterrupt();
   batteryTempAcknowledged();
 
-  queueCounter = queueCounter + 1;
-  /*if(queueCounter % 10 == 0){
-    DEBUG = 1;
-  } else {
-    DEBUG = 0;
-  }*/
-
 /*
   Serial.print("Battery: ");
   Serial.print(batteryConnectedFlag);
