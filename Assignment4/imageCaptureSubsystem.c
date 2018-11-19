@@ -10,16 +10,15 @@ void imageCaptureFunction(void* data) {
 
     // don't do much in sampling to get sampling rate as high as possible
     for (int i = 0; i < FFT_BUFFER_SIZE; i++) {
-        // divide by 10 to prevent overflows
-
         imageData -> fft_in[i] = analogRead(IMAGE_READ_PIN);
     }
 
     for (int i = 0; i < FFT_BUFFER_SIZE; i++) {
-        // divide by 10 to prevent overflows
-        imageData -> fft_in[i] = imageData -> fft_in[i] / 100.0 - OFFSET_ADC / 100.0;
+        // divide by 100 to prevent overflows
+        imageData -> fft_in[i] = imageData -> fft_in[i] / SCALING_FACTOR - OFFSET_ADC / SCALING_FACTOR;
     }
 
+    // zero out data
     for (int i = 0; i < FFT_BUFFER_SIZE; i++) {
         imageData -> fft_out[i] = 0;
     }
@@ -29,5 +28,4 @@ void imageCaptureFunction(void* data) {
 
     pushSample(imageData -> freq_buffer, frequency);
     *(imageData -> last_freq) = frequency;
-    //print_format("COOL FREQUENCY: %d", frequency);
 }
