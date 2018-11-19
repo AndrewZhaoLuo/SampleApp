@@ -29,48 +29,47 @@ void reschedule() {
 
 // waits until current cycle is over
 void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
-    if (queue -> length > 0) {
-        long long currentTime = getTimeMillis();
+    if (queue -> length == 0) reschedule();
 
-        // are we after the completion of a major/minor cycle
-        int isMajor = currentTime >= scheduler -> nextEndMajor;
-        int isMinor = currentTime >= scheduler -> nextEndMinor;
+    long long currentTime = getTimeMillis();
 
-        // set the priority level we should be running tasks on based on
-        // whether we have completed a cycle or not
-        cycleLevel level = CYCLE_REAL_TIME;
-        if (isMinor) {
-            scheduler -> nextEndMinor = currentTime + MINOR_CYCLE;
-            level = CYCLE_MINOR;
-        }
-        if (isMajor) {
-            scheduler -> nextEndMajor = currentTime + MAJOR_CYCLE;
-            level = CYCLE_MAJOR;
-        }
+    // are we after the completion of a major/minor cycle
+    int isMajor = currentTime >= scheduler -> nextEndMajor;
+    int isMinor = currentTime >= scheduler -> nextEndMinor;
 
-        // go through TCB queue, executing things if they are high enough priority
-        for (int target_priority = 1; target_priority <= 5; target_priority++) {
-            for (int i = 0; i < queue -> length; i++) {
-                TCB* curTCB = getNextTCB(queue);
+    // set the priority level we should be running tasks on based on
+    // whether we have completed a cycle or not
+    cycleLevel level = CYCLE_REAL_TIME;
+    if (isMinor) {
+        scheduler -> nextEndMinor = currentTime + MINOR_CYCLE;
+        level = CYCLE_MINOR;
+    }
+    if (isMajor) {
+        scheduler -> nextEndMajor = currentTime + MAJOR_CYCLE;
+        level = CYCLE_MAJOR;
+    }
 
-                if (curTCB -> priority > target_priority) {
-                    addToTail(queue, curTCB);
-                    continue;
-                }
+    // go through TCB queue, executing things if they are high enough priority
+    for (int target_priority = 1; target_priority <= 5; target_priority++) {
+        for (int i = 0; i < queue -> length && queue -> length > 0; i++) {
+            TCB* curTCB = getNextTCB(queue);
 
-                if (level == CYCLE_MAJOR) {
-                    // if a major cycle run everything
-                    invoke(curTCB);
-                } else if (level == CYCLE_MINOR && curTCB -> priority != PRIORITY_LOW){
-                    invoke(curTCB);
-                } else if (level == CYCLE_REAL_TIME && curTCB -> priority == PRIORITY_REAL_TIME) {
-                    invoke(curTCB);
-                }
+            if (curTCB -> priority > target_priority) {
                 addToTail(queue, curTCB);
+                continue;
             }
+
+            if (level == CYCLE_MAJOR) {
+                // if a major cycle run everything
+                invoke(curTCB);
+            } else if (level == CYCLE_MINOR && curTCB -> priority != PRIORITY_LOW){
+                invoke(curTCB);
+            } else if (level == CYCLE_REAL_TIME && curTCB -> priority == PRIORITY_REAL_TIME) {
+                invoke(curTCB);
+            }
+
+            addToTail(queue, curTCB);
         }
-    } else {
-        reschedule();
     }
 }
 
