@@ -87,7 +87,6 @@ char vehicleCommand;
 char vehicleResponse;
 unsigned short batteryTemp;
 unsigned short transportDist;
-int queueCounter;
 
 // data buffers
 unsigned int timeIntervalBuf[16 + BUFFER_METADATA_SIZE];

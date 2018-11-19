@@ -4,17 +4,27 @@
 #include <Arduino.h>
 #include "print_format.h"
 
+#define MIN_METERS 100
+#define MAX_METERS 2000
+#define MIN_FREQUENCY 100
+#define MAX_FREQUENCY 2000
+#define LINEAR_RELATIONSHIP 2100
+#define CONVERT_TO_MILLIS 1000.0
+#define MIN_DIST_GETTING_SIGNAL 1000
+#define TEN_PERCENT 0.10
+#define ENOUGH_SAMPLES 10
+
 void transportDistanceFunction(void* data) {
     // Cast to correct pointer
     transportDistanceData* transportData = (transportDistanceData*) data;
 
     // For debugging
-    print_format("Transport dist connection flag: ");
+    /*print_format("Transport dist connection flag: ");
     if (transportDistanceFreqConnectedFlag) {
       print_format("TRUE\n");
     } else {
       print_format("FALSE\n");
-    }
+    }*/
 
     if(transportDistanceFreqConnectedFlag) {
       int curr = 0;
@@ -28,13 +38,13 @@ void transportDistanceFunction(void* data) {
         if(curr < CUTOFF && prev >= CUTOFF){
           count++;
         }
-        if(count == 100){
+        if(count == ENOUGH_SAMPLES){
           break;
         }
       }
       unsigned long long endTime = getTimeMillis();
 
-      print_format("Count %d\n", count);
+      //print_format("Count %d\n", count);
 
       // Calculate time elapsed in millis
       unsigned long duration = ((endTime-startTime));
@@ -42,42 +52,42 @@ void transportDistanceFunction(void* data) {
       // Calculate time interval between peaks and push to interval buffer (millis)
       double timeInterval = duration/((double) count);
 
-      print_format("Time interval: %d\n", (int) timeInterval);
+      //print_format("Time interval: %d\n", (int) timeInterval);
 
       pushSample(transportData->timeIntervalBuffer, (int) timeInterval);
 
-      double durationMS = ((double) duration)/1000.0;
+      double durationMS = ((double) duration)/CONVERT_TO_MILLIS;
 
       double frequency = ((double) count)/ durationMS;
 
       // For debugging
-      print_format("Frequency: %d\n", (int) frequency);
+      //print_format("Frequency: %d\n", (int) frequency);
 
       int meters;
-      if(frequency > 2000) {
-        meters = 100;
-      } else if(frequency < 100){
-        meters = 2000;
+      if(frequency > MAX_FREQUENCY) {
+        meters = MIN_METERS;
+      } else if(frequency < MIN_FREQUENCY){
+        meters = MAX_METERS;
       } else {
-        meters = 2100 - ((int) frequency);
+        meters = LINEAR_RELATIONSHIP - ((int) frequency);
       }
 
-      print_format("meters: %d\n", meters);
+      //print_format("meters: %d\n", meters);
 
       // If the transport vehicle is within 1 km, we know we register the signal
-      if (meters <= 1000.0) {
+      if (meters <= MIN_DIST_GETTING_SIGNAL) {
 
         *(transportData->transportDistPtr) = ((unsigned short) meters);
 
         // Push this distance to the transport distance buffer if greater than 10% from previous value
         int previousSample = getNthPreviousSample(transportData->meterDistanceBuffer, 0);
         double percentFromLast = ((double)(previousSample - meters))/((double) previousSample);
-        if(percentFromLast >= 0.10 || percentFromLast <= -0.10){
+        if(percentFromLast >= TEN_PERCENT || percentFromLast <= -(TEN_PERCENT)){
           pushSample(transportData->meterDistanceBuffer, meters);
         }
       } else {
         // It is farther away, so set the distance to 1000 miles
-        *(transportData->transportDistPtr) = 1000;
+        *(transportData->transportDistPtr) = MIN_DIST_GETTING_SIGNAL;
       }
     }
 
