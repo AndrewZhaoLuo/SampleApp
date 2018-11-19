@@ -5,47 +5,24 @@
 #include "globals.h"
 #include "print_format.h"
 
-/*
-// reschedule taskqueue after we are done
-void reschedule() {
-  // add tasks in reverse order based on assigned priority
-  addToHead(&queue, &tcbs[DISPLAY_DATA_TCB]);
-  addToHead(&queue, &tcbs[COMS_DATA_TCB]);
-
-  if (solarPanelConnectedFlag && (solarPanelDeploy | solarPanelRetract)) {
-    addToHead(&queue, &tcbs[KEYPAD_DATA_TCB]);
-    addToHead(&queue, &tcbs[PANEL_DATA_TCB]);
-  }
-
-  if (batteryConnectedFlag) {
-    addToHead(&queue, &tcbs[POWER_DATA_TCB]);
-  }
-
-  addToHead(&queue, &tcbs[DISTANCE_TRANSPORT_DATA_TCB]);
-  addToHead(&queue, &tcbs[THRUSTER_DATA_TCB]);
-  addToHead(&queue, &tcbs[WARNING_DATA_TCB]);
-  addToHead(&queue, &tcbs[VEHICLE_DATA_TCB]);
-  addToHead(&queue, &tcbs[IMAGE_CAPTURE_DATA_TCB]);
-}
-
-
-*/
-
 // Dynamically reschedules tasks highest -> lowest priority.
 // POWER_DATA requires global flag
 // KEYPAD_DATA && PANEL_DATA require global flag
 void reschedule() {
   for (int insertPriorityThreshold = 0; insertPriorityThreshold < LENGTH; insertPriorityThreshold++) { // Look at every task
     for (int TCB_NUM = 0; TCB_NUM < LENGTH; TCB_NUM++) {
-        TCB* curTCB = &tcbs[TCB_NUM];
-        int curPriority = curTCB -> priority;
-        if (curPriority == insertPriorityThreshold) {
-          // Only connect power_data if battery connected
-          if (TCB_NUM == POWER_DATA_TCB && !batteryConnectedFlag) continue;
-          // Only connect Keypad_data and panal_data if
-          if ((TCB_NUM == KEYPAD_DATA_TCB || TCB_NUM == PANEL_DATA_TCB) && !(solarPanelConnectedFlag && (solarPanelDeploy | solarPanelRetract))) continue;
-          addToTail(&queue, &tcbs[TCB_NUM]);
+      TCB* curTCB = &tcbs[TCB_NUM];
+      int curPriority = curTCB -> priority;
+      if (curPriority == insertPriorityThreshold) {
+        // Only connect power_data if battery connected
+        if (TCB_NUM == POWER_DATA_TCB && !batteryConnectedFlag) continue;
+        // Only connect Keypad_data and panal_data if
+        if ((TCB_NUM == KEYPAD_DATA_TCB || TCB_NUM == PANEL_DATA_TCB)
+            && !(solarPanelConnectedFlag && (solarPanelDeploy | solarPanelRetract))) {
+           continue;
         }
+        addToTail(&queue, &tcbs[TCB_NUM]);
+      }
     }
   }
 }
