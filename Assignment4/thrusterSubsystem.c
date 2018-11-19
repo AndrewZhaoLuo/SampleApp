@@ -17,7 +17,7 @@
 
 void thrusterSubsystemFunction(void* data) {
     // for fuel usage < 1, keep track of when we have used an integer number of fuel
-    static double store = 0.0;
+    static double store = DEFAULT_STORE_VALUE;
 
     // Cast to correct pointer
     thrusterSubsystemData* thrusterData = (thrusterSubsystemData*) data;
@@ -43,7 +43,6 @@ void thrusterSubsystemFunction(void* data) {
     int roundedFuelUsed = (int) store;
     store -= roundedFuelUsed;
     *(thrusterData->fuelLevelPtr) = *(thrusterData->fuelLevelPtr) - roundedFuelUsed;
-
 
     long storePrint = store * SCALE_FOR_PRINT;
     long fuelUsedPrint = fuelUsed * SCALE_FOR_PRINT;
