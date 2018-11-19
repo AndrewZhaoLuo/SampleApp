@@ -10,6 +10,7 @@
 // range of values that can be received as a "command"
 #define RANDOM_MIN_CMD 0
 #define RANDOM_MAX_CMD 65535
+#define NO_NEW_FREQUENCY_INFO -1
 
 #include "bool.h"
 
