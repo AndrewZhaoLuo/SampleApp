@@ -8,11 +8,11 @@ extern "C" {
 // Taken from article: http://playground.arduino.cc/Main/Printf
 void print_format(char *fmt, ... ){
         if (!DEBUG) return;
-  
-        char buf[1024]; // resulting string limited to 1024 chars
+
+        char buf[PRINT_BUFF_SIZE]; // resulting string limited to 1024 chars
         va_list args;
         va_start (args, fmt );
-        vsnprintf(buf, 1024, fmt, args);
+        vsnprintf(buf, PRINT_BUFF_SIZE, fmt, args);
         va_end (args);
         Serial.println(buf);
 }
