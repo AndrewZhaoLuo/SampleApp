@@ -16,17 +16,17 @@ void vehicleCommsFunction(void* data) {
   // Cast to correct pointer
   vehicleCommsData* vehicleData = (vehicleCommsData*) data;
 
-  if(Serial.available() > 0){
+  if(Serial.available()){
     incomingByte = Serial.read();
     *(vehicleData->vehicleCommandPtr) = toupper(incomingByte);
     // Send incoming byte to uno and get response
     Serial1.write(incomingByte);
     Serial.println("SENT");
-  } 
+  }
 
-  while (Serial1.available() > 0){
+  while (Serial1.available()){
     response = Serial1.read();
-    
+
     // Set global response
     *(vehicleData->vehicleResponsePtr) = response;
 
@@ -42,7 +42,8 @@ void vehicleCommsFunction(void* data) {
     }
 
     // Request to dock: only confirm if vehicle is close to station
-    if((response == 'd' && *(vehicleData->transportDistPtr) <= 102) || (response == 'D' && *(vehicleData->transportDistPtr) <= 102)){
+    if((response == 'd' && *(vehicleData->transportDistPtr) <= MIN_DISTANCE_DOCK)
+       || (response == 'D' && *(vehicleData->transportDistPtr) <= MIN_DISTANCE_DOCK)){
       Serial1.write('C');
     }
   }
