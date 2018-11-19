@@ -5,6 +5,7 @@
 #include "globals.h"
 #include "print_format.h"
 
+/*
 // reschedule taskqueue after we are done
 void reschedule() {
   // add tasks in reverse order based on assigned priority
@@ -27,12 +28,30 @@ void reschedule() {
   addToHead(&queue, &tcbs[IMAGE_CAPTURE_DATA_TCB]);
 }
 
+
+*/
+
+void reschedule() {
+  
+  for (int insertPriorityThreshold = 0; insertPriorityThreshold < LENGTH; insertPriorityThreshold++) { // Look at every task
+    for (int TCB_NUM = 0; TCB_NUM < LENGTH; TCB_NUM++) {
+        TCB* curTCB = &tcbs[TCB_NUM];
+        int curPriority = curTCB -> priority;
+        if (curPriority == insertPriorityThreshold) {
+          // Only connect power_data if battery connected
+          if (TCB_NUM == POWER_DATA_TCB && !batteryConnectedFlag) continue;
+          // Only connect Keypad_data and panal_data if 
+          if ((TCB_NUM == KEYPAD_DATA_TCB || TCB_NUM == PANEL_DATA_TCB) && !(solarPanelConnectedFlag && (solarPanelDeploy | solarPanelRetract))) continue;
+          addToTail(&queue, &tcbs[TCB_NUM]);
+        }
+    }
+  }
+}
 // waits until current cycle is over
 void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
-    static int curPriority = 1;
-
+    static int curPriority = 0;
     curPriority++;
-    if (curPriority > 5) curPriority = 1;
+    if (curPriority > PRIORITY_LOW) curPriority = 1;
 
     long long currentTime = getTimeMillis();
 
@@ -55,9 +74,19 @@ void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
     // go through TCB queue, executing things if they are high enough priority
     while (queue -> length > 0) {
         TCB* curTCB = getNextTCB(queue);
-
-        if (curTCB -> priority > curPriority) continue;
-
+        //int curPriority = curTCB -> priority;
+        print_format("TCB current priority: %d", curTCB -> priority);
+        if (level == CYCLE_MAJOR) {
+            // if a major cycle run everything
+            print_format("************ MAJOR CYCLE");
+            invoke(curTCB);
+        } if (curTCB -> priority <= curPriority && curTCB -> priority != PRIORITY_LOW) {
+            invoke(curTCB);
+        }
+    }
+        /*
+        if (curTCB -> priority != curPriority) continue; // Skip
+        
         if (level == CYCLE_MAJOR) {
             // if a major cycle run everything
             invoke(curTCB);
@@ -66,7 +95,7 @@ void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
         } else if (level == CYCLE_REAL_TIME && curTCB -> priority == PRIORITY_REAL_TIME) {
             invoke(curTCB);
         }
-    }
+        */
 
     reschedule();
 }

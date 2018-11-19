@@ -1,6 +1,5 @@
 #ifndef TCB_H_INCLUDED
 #define TCB_H_INCLUDED
-
 // priority levels are like so: REAL_TIME > HIGH > LOW
 typedef enum {PRIORITY_REAL_TIME = 1,
               PRIORITY_CRTITICAL = 2,

@@ -97,7 +97,7 @@ void warningAlarmFunction(void* data) {
       unsigned long long timeSinceAlarmTriggered = (getTimeMillis() - *(warningData->tempAlarmTriggeredTimePtr));
         print_format("timeSinceAlarmTriggered: %d", timeSinceAlarmTriggered);
         
-        if (timeSinceAlarmTriggered >= FIFTEEN_SECONDS && ((timeSinceAlarmTriggered % 40000) >= 15000)) { // flash for 5 seconds
+        if (timeSinceAlarmTriggered >= FIFTEEN_SECONDS && ((timeSinceAlarmTriggered % 10000) >= 5000)) { // flash for 5 seconds
           if (parityAlarm) {
             print_display("TEMPERATURE", 0, 120, 2, RED);
           } else {
@@ -111,6 +111,8 @@ void warningAlarmFunction(void* data) {
           print_format("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~SOLID");
           // Display solid text for 5 seconds
         }
+    } else {
+      print_display("TEMPERATURE", 0, 120, 2, WHITE);
     }
     // these control flashing behavior for lights.
     flash_display("BATTERY", 0, 40, 2, color_battery, &parityBattery, &nextChangeBattery, BATTERY_FLASH_PERIOD);
