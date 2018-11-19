@@ -84,7 +84,7 @@ void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
             invoke(curTCB);
         } else if (level == CYCLE_MINOR && curTCB -> priority <= curPriority && curTCB -> priority != PRIORITY_LOW) {
             invoke(curTCB);
-        } else if (curTCB -> priorirty == PRIORITY_REAL_TIME) {
+        } else if (curTCB -> priority == PRIORITY_REAL_TIME) {
             invoke(curTCB);
         }
     }

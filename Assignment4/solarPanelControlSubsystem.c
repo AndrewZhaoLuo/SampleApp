@@ -12,29 +12,29 @@
  */
 void drivePWM(unsigned int dutyCycle, long long curTime, int pin) {
   static int state = PIN_OFF;
-  static long long nextChange = 500; // when to turn off the pin
+  static long long nextChange = PWM_CYCLE; // when to turn off the pin
 
-  if (dutyCycle == 0) {
+  if (dutyCycle == SOLAR_PANEL_FULL_OFF) {
     analogWrite(pin, PIN_OFF);
     state = PIN_OFF;
     nextChange = curTime + PWM_CYCLE;
     return;
-  } if (dutyCycle == 100) {
+  } if (dutyCycle == SOLAR_PANEL_FULL_ON) {
     analogWrite(pin, PIN_ON);
     state = PIN_ON;
-    nextChange = curTime + PWM_CYCLE;    
+    nextChange = curTime + PWM_CYCLE;
     return;
   }
-  
+
   if (curTime > nextChange) {
     if (state == PIN_OFF) {
       state = PIN_ON;
-      nextChange = curTime + PWM_CYCLE / 100 * dutyCycle;
+      nextChange = curTime + PWM_CYCLE / SOLAR_PANEL_FULL_ON * dutyCycle;
     } else {
       state = PIN_OFF;
-      nextChange = curTime + PWM_CYCLE / 100 * (100 - dutyCycle);
+      nextChange = curTime + PWM_CYCLE / SOLAR_PANEL_FULL_ON * (SOLAR_PANEL_FULL_ON - dutyCycle);
     }
-  } 
+  }
   analogWrite(pin, state);
 }
 
@@ -77,20 +77,13 @@ void solarPanelControlFunction(void* data) {
         *(panelData -> solarPanelRetract) = FALSE;
     }
 
-    /*print_format("\tInc: %d, Dec: %d", inc, dec);
-    print_format("\tDeploying: %d, Retracting: %d", *(panelData -> solarPanelDeploy), *(panelData -> solarPanelRetract));
-    print_format("\tState: %d", *(panelData -> solarPanelState));
-    print_format("\tMove-ok: %d", solarPanelMoveFlag);*/
-
     long long curTime = getTimeMillis();
 
     // drive PWM, drive forward if your state is retracted
     // and backward if you were fully deployed
     if (*(panelData -> solarPanelState) && solarPanelMoveFlag && *(panelData -> solarPanelRetract)) {
-        //print_format("\tMOTOR DRIVE BACKWARD: %d", *panelData -> motorDriveSpeed);
         drivePWM(*panelData -> motorDriveSpeed, curTime, MOTOR_FORWARD_PWM_PIN);
     } else if (solarPanelMoveFlag && *(panelData -> solarPanelDeploy)) {
-        //print_format("\tMOTOR DRIVE FORWARD: %d", *panelData -> motorDriveSpeed);
         drivePWM(*panelData -> motorDriveSpeed, curTime, MOTOR_FORWARD_PWM_PIN);
     } else {
         drivePWM(0, curTime, MOTOR_FORWARD_PWM_PIN);
