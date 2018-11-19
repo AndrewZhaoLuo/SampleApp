@@ -21,6 +21,11 @@ Generation:   0  2  3  5  6   8
 #define VOLTAGE_SCALAR 36.0 // Converts 0-5V to 0-36V as per spec
 #define ADC_PIN 58 // Hardware pin of ADC
 
+// Alarm state definitions
+#define TEMPERATURE_ALARM_NOT_TRIGGERED             0
+#define TEMPERATURE_ALARM_TRIGGERED_UNACKNOWLEDGED  1
+#define TEMPERATURE_ALARM_TRIGGERED_ACKNOWLEDGED    2
+
 // the power consumption thresholds to begin decreasing/increasing use
 #define CONSUMPTION_LIMIT 10
 #define CONSUMPTION_FLOOR 5
@@ -40,11 +45,15 @@ typedef struct powerSubsystemDataStruct {
     int callCounter;
     Bool increaseConsumption;
 
+    int* tempAlarmStatePtr; // For alarm system
+    unsigned long long* tempAlarmTriggeredTimePtr;
+    unsigned short* batteryTempPtr;
+    
     Bool* solarPanelDeploy;
     Bool* solarPanelRetract;
     int* motorDriveSpeed;
     unsigned int* batteryBuff; // 16-Sample buffer
-    unsigned int* batteryTempBuff;
+    int* batteryTempBuff;
 
 } powerSubsystemData;
 

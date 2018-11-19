@@ -17,23 +17,29 @@
 #define WHITE   0xFFFF
 #define ORANGE  0xFFA0
 
-#define DISTANCE_TRANSPORT_PIN A10
-#define PANEL_CONNECTION_PIN A11
-#define PANEL_INTERRUPT_PIN A12
-#define BATTERY_IN_PIN A13
-#define MOTOR_BACKWARD_PWM_PIN A14
-#define MOTOR_FORWARD_PWM_PIN A15
+#define DISTANCE_TRANSPORT_PIN          A10
+#define BATTERY_TEMPERATURE_SENSOR1_PIN A11
+#define BATTERY_TEMPERATURE_SENSOR2_PIN A12
+#define BATTERY_IN_PIN                  A13
+#define IMAGE_READ_PIN                  A14
+#define MOTOR_FORWARD_PWM_PIN           A15
 
-#define COMS_DATA_TCB 0
-#define THRUSTER_DATA_TCB 1
-#define POWER_DATA_TCB 2
-#define WARNING_DATA_TCB 3
-#define DISPLAY_DATA_TCB 4
-#define VEHICLE_DATA_TCB 5
-#define PANEL_DATA_TCB 6
-#define KEYPAD_DATA_TCB 7
+#define BATTERY_TEMP_CONNECTION   45
+#define TRANSPORT_DIST_CONNECTION 47
+#define SOLAR_PANEL_SAFETY        49
+#define SOLAR_PANEL_CONNECTION    51
+#define BATTERY_CONNECTION        53
+
+#define COMS_DATA_TCB       0
+#define THRUSTER_DATA_TCB   1
+#define POWER_DATA_TCB      2
+#define WARNING_DATA_TCB    3
+#define DISPLAY_DATA_TCB    4
+#define VEHICLE_DATA_TCB    5
+#define PANEL_DATA_TCB      6
+#define KEYPAD_DATA_TCB     7
 #define DISTANCE_TRANSPORT_DATA_TCB 8
-#define IMAGE_CAPTURE_DATA_TCB 9
+#define IMAGE_CAPTURE_DATA_TCB      9
 
 #include "bool.h"
 #include "thrusterSubsystem.h"
@@ -59,6 +65,10 @@ Scheduler scheduler;
 Taskqueue queue;
 
 // global variables
+  // Temperature Alarm System Globals
+int tempAlarmState;
+int tempAlarmTriggeredTime;
+
 int motorSpeed;
 int last_freq;
 unsigned int thrustCommand;
@@ -77,12 +87,13 @@ char vehicleCommand;
 char vehicleResponse;
 unsigned short batteryTemp;
 unsigned short transportDist;
+int queueCounter;
 
 // data buffers
 unsigned int timeIntervalBuf[16 + BUFFER_METADATA_SIZE];
 unsigned int meterDistanceBuf[8 + BUFFER_METADATA_SIZE];
 unsigned int batteryBuf[16 + BUFFER_METADATA_SIZE];
-unsigned int batteryTempBuf[16 + BUFFER_METADATA_SIZE];
+int batteryTempBuff[16 + BUFFER_METADATA_SIZE];
 unsigned int powerBuf[16 + BUFFER_METADATA_SIZE];
 signed int fft_in[FFT_BUFFER_SIZE + BUFFER_METADATA_SIZE];
 signed int fft_out[FFT_BUFFER_SIZE + BUFFER_METADATA_SIZE];
@@ -116,4 +127,5 @@ void batteryConnectionInterrupt();
 void solarPanelConnectionInterrupt();
 void solarPanelSafetyInterrupt();
 void transportDistFreqInterrupt();
+void batteryTempAcknowledged();
 #endif // GLOBALS_H_INCLUDED

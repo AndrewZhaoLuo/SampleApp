@@ -2,6 +2,7 @@
 #include "print_format.h"
 #include "optfft.h"
 #include "circularBuffer.h"
+#include "globals.h"
 #include <Arduino.h>
 
 void imageCaptureFunction(void* data) {
@@ -10,6 +11,7 @@ void imageCaptureFunction(void* data) {
     // don't do much in sampling to get sampling rate as high as possible
     for (int i = 0; i < FFT_BUFFER_SIZE; i++) {
         // divide by 10 to prevent overflows
+
         imageData -> fft_in[i] = analogRead(IMAGE_READ_PIN);
     }
 

@@ -88,7 +88,7 @@ void solarPanelControlFunction(void* data) {
     // and backward if you were fully deployed
     if (*(panelData -> solarPanelState) && solarPanelMoveFlag && *(panelData -> solarPanelRetract)) {
         //print_format("\tMOTOR DRIVE BACKWARD: %d", *panelData -> motorDriveSpeed);
-        drivePWM(*panelData -> motorDriveSpeed, curTime, MOTOR_BACKWARD_PWM_PIN);
+        drivePWM(*panelData -> motorDriveSpeed, curTime, MOTOR_FORWARD_PWM_PIN);
     } else if (solarPanelMoveFlag && *(panelData -> solarPanelDeploy)) {
         //print_format("\tMOTOR DRIVE FORWARD: %d", *panelData -> motorDriveSpeed);
         drivePWM(*panelData -> motorDriveSpeed, curTime, MOTOR_FORWARD_PWM_PIN);

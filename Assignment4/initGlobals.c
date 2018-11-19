@@ -2,9 +2,10 @@
 #include <Arduino.h>
 #include "globals.h"
 #include "clock.h"
+#include "print_format.h"
 
 void batteryConnectionInterrupt() {
-  int val = digitalRead(53);
+  int val = digitalRead(BATTERY_CONNECTION);
   if (val == HIGH) {
     batteryConnectedFlag = TRUE;
     batteryConnectionTimestamp = getTimeMillis();
@@ -13,8 +14,20 @@ void batteryConnectionInterrupt() {
   }
 }
 
+void batteryTempAcknowledged() {
+  int val = digitalRead(BATTERY_TEMP_CONNECTION);
+  print_format("batteryTempAcknowledged checked:");
+  if (val == HIGH) {
+      print_format("batteryTempAcknowledged checked: is HIGH ************");
+    if (tempAlarmState == TEMPERATURE_ALARM_TRIGGERED_UNACKNOWLEDGED) {
+      print_format("batteryTempAcknowledged checked: UPDATED **************************************");
+      tempAlarmState = TEMPERATURE_ALARM_TRIGGERED_ACKNOWLEDGED;
+    }
+  }
+}
+
 void solarPanelConnectionInterrupt() {
-  int val = digitalRead(51);
+  int val = digitalRead(SOLAR_PANEL_CONNECTION);
   if (val == HIGH) {
     solarPanelConnectedFlag = TRUE;
   } else {
@@ -23,7 +36,7 @@ void solarPanelConnectionInterrupt() {
 }
 
 void solarPanelSafetyInterrupt() {
-  int val = digitalRead(49);
+  int val = digitalRead(SOLAR_PANEL_SAFETY);
   if (val == HIGH) {
     solarPanelMoveFlag = FALSE;
   } else {
@@ -32,7 +45,7 @@ void solarPanelSafetyInterrupt() {
 }
 
 void transportDistFreqInterrupt(){
-  int val = digitalRead(47);
+  int val = digitalRead(TRANSPORT_DIST_CONNECTION);
   if (val == HIGH) {
     transportDistanceFreqConnectedFlag = TRUE;
   } else {
@@ -47,13 +60,15 @@ void initPowerData() {
     powerData.powerGenerationPtr = &powerGeneration;
     powerData.callCounter = 0;
     powerData.increaseConsumption = TRUE;
-
+    powerData.tempAlarmStatePtr = &tempAlarmState;
+    powerData.tempAlarmTriggeredTimePtr = &tempAlarmTriggeredTime;
+    powerData.batteryTempPtr = &batteryTemp;
     powerData.motorDriveSpeed = &motorSpeed;
     powerData.solarPanelRetract = &solarPanelRetract;
     powerData.solarPanelDeploy = &solarPanelDeploy;
     // Buffers
     powerData.batteryBuff= batteryBuf;
-    powerData.batteryTempBuff = batteryTempBuf;
+    powerData.batteryTempBuff = batteryTempBuff;
 }
 
 void initThrusterData() {
@@ -91,6 +106,8 @@ void initWarningData() {
     warningData.batteryLowPtr = &batteryLow;
     warningData.fuelLevelPtr = &fuelLevel;
     warningData.fuelLowPtr = &fuelLow;
+    warningData.tempAlarmStatePtr = &tempAlarmState;
+    warningData.tempAlarmTriggeredTimePtr = &tempAlarmTriggeredTime;
 }
 
 
@@ -148,16 +165,22 @@ void initialize(){
     //batteryLevelPtr = powerBuf;
     batteryTemp = 33;
     transportDist = 1000;
+    // temperature alarm
+    tempAlarmState = TEMPERATURE_ALARM_NOT_TRIGGERED; // For alarm system
+    tempAlarmTriggeredTime = 0;
+    queueCounter = 0;
 
     // Initalize data buffers
     initBuffer(batteryBuf, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer
-    initBuffer(batteryTempBuf, 16 + BUFFER_METADATA_SIZE);
+    //initBuffer(displayDataBuf, 16 + BUFFER_METADATA_SIZE); // Not used  ????????????????????????????????
     initBuffer(powerBuf, 16 + BUFFER_METADATA_SIZE);
     initBuffer(timeIntervalBuf, 16 + BUFFER_METADATA_SIZE);
     initBuffer(meterDistanceBuf, 8 + BUFFER_METADATA_SIZE);
     initBuffer(fft_in, FFT_BUFFER_SIZE + BUFFER_METADATA_SIZE);
     initBuffer(fft_out, FFT_BUFFER_SIZE + BUFFER_METADATA_SIZE);
     initBuffer(freq_buffer, FREQUENCY_BUFFER + BUFFER_METADATA_SIZE);
+    initBuffer(batteryTempBuff, 16 + BUFFER_METADATA_SIZE);
+
 
     // interrupt flags
     batteryConnectedFlag = FALSE;

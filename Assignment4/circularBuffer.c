@@ -18,7 +18,7 @@
 // }
 
 // Replaces oldest value in buffer with data.
-void pushSample (unsigned int buffer[], int data) {
+void pushSample (int buffer[], int data) {
   int curIndex = buffer[BUFFER_INSERT_INDEX];
 
   int size = buffer[BUFFER_SIZE_INDEX];
@@ -34,7 +34,7 @@ void pushSample (unsigned int buffer[], int data) {
 }
 
 // Returns Nth previous sample (n >= 0). n = 0 is last sample, n = 1 is prevous sample.
-int getNthPreviousSample (unsigned int buffer[], int n) {
+int getNthPreviousSample (int buffer[], int n) {
   if (n < 0) {
     print_format("getNthPreviousSample: n cannot be negative. Output will be bad.");
   }
@@ -50,7 +50,7 @@ int getNthPreviousSample (unsigned int buffer[], int n) {
 }
 
 // Initalizes indexes and buffer meta data. Must have size >= 4.
-void initBuffer(unsigned int buffer[], int size) {
+void initBuffer(int buffer[], int size) {
   buffer[BUFFER_SIZE_INDEX] = size;
   buffer[BUFFER_INSERT_INDEX] = size-1;
   for (int i = BUFFER_FIRST_DATA_INDEX; i < size; i++) {
@@ -58,14 +58,14 @@ void initBuffer(unsigned int buffer[], int size) {
   }
 }
 
-void printBuffer(unsigned int buffer[], int size) {
+void printBuffer(int buffer[], int size) {
     print_format("\n");
     for (int i = 0; i < size; i++) print_format("%d ", buffer[i]);
     print_format("\n");
 }
 
 // Empty buffer is defined as 0 in index 2 -> size - 1
-int isBufferEmpty (unsigned int buffer[], int size) {
+int isBufferEmpty (int buffer[], int size) {
     int isEmpty = 1;
     for (int i = BUFFER_FIRST_DATA_INDEX; i < size; i++) {
         if (buffer[i] != 0) {
@@ -89,7 +89,7 @@ int testBuffer(int size, int n) {
         pushSample (buffer, i);
         printBuffer(buffer, size);
         int prev = getNthPreviousSample(buffer, n);
-        int correct = prev == (i - n);
+        int correct = prev == (i - n % (size-2));
         print_format("Previous Sample: %d\n", prev);
         if (!correct) {
             print_format("INCORRECT PREVIOUS SAMPLE: XXXXXXXXXXXXXXXXXXXXXXXXX");

@@ -24,8 +24,9 @@ void vehicleCommsFunction(void* data) {
     Serial.println("SENT");
   } 
 
-  if (Serial1.available()){
+  while (Serial1.available() > 0){
     response = Serial1.read();
+    
     // Set global response
     *(vehicleData->vehicleResponsePtr) = response;
 

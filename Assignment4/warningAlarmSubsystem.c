@@ -5,6 +5,7 @@
 #include "satelliteComsSubsystem.h" // for warning levels
 #include "print_format.h"
 #include "LCD.h"
+#include "powerSubsystem.h" // for alarm states
 
 // Handles flashing behavior, determines whether state should be on or off
 // based on parity bit given. This parity changes based on a nextParityChange timestamp
@@ -28,15 +29,24 @@ void flash_display(char* str, int x, int y, int fontsize, int color, int* parity
   tft_display_bottom(str, x, y);
 }
 
+void print_display(char* str, int x, int y, int fontsize, int color) {
+  tft_set_color(color);
+  tft_set_fontsize(fontsize);
+  tft_display_bottom(str, x, y);
+}
+
+
 void warningAlarmFunction(void* data) {
     // variables for managing flashing
     // if 1, print with given color, otherwise print black
     static int parityFuel = 0;
     static int parityBattery = 0;
+    static int parityAlarm = 0;
 
     // when to flip the parity bit based on system clock
     static unsigned long long nextChangeFuel = 0;
     static unsigned long long nextChangeBattery = 0;
+    static unsigned long long nextChangeAlarm = 0;
 
     // Cast to correct pointer
     warningAlarmData* warningData = (warningAlarmData*) data;
@@ -83,7 +93,23 @@ void warningAlarmFunction(void* data) {
 
     //print_format("\n");
 
-    // these control flashing behavior for lights
+    // Flashing Alarm warning
+    if (*(warningData->tempAlarmStatePtr) == TEMPERATURE_ALARM_TRIGGERED_UNACKNOWLEDGED){
+      unsigned long long timeSinceAlarmTriggered = (getTimeMillis() - *(warningData->tempAlarmTriggeredTimePtr));
+      //double timeSinceAlarmTriggered = (getTimeMillis() - *(warningData->tempAlarmTriggeredTimePtr)) / 1000.0;
+        print_format("timeSinceAlarmTriggered: %d", timeSinceAlarmTriggered);
+        print_format("timeSinceAlarmTriggered > (long long)FIFTEEN_SECONDS: %d", timeSinceAlarmTriggered > (unsigned long long)FIFTEEN_SECONDS);
+        
+        if (timeSinceAlarmTriggered >= (unsigned long long)(10000) && (timeSinceAlarmTriggered % (unsigned long long)TEN_SECONDS) <= (unsigned long long)ALARM_FLASH_PERIOD) { // flash for 5 seconds
+          print_display("TEMPERATURE", 0, 120, 2, RED);
+          print_format("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~SOLID");
+        } else {
+          flash_display("TEMPERATURE", 0, 120, 2, RED, &parityAlarm, &nextChangeAlarm, 500);
+          print_format("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Flashing");
+          // Display solid text for 5 seconds
+        }
+    }
+    // these control flashing behavior for lights.
     flash_display("BATTERY", 0, 40, 2, color_battery, &parityBattery, &nextChangeBattery, BATTERY_FLASH_PERIOD);
     flash_display("FUEL", 0, 80, 2, color_fuel, &parityFuel, &nextChangeFuel, FUEL_FLASH_PERIOD);
 }
