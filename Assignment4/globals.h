@@ -67,7 +67,7 @@ Taskqueue queue;
 // global variables
   // Temperature Alarm System Globals
 int tempAlarmState;
-int tempAlarmTriggeredTime;
+unsigned long long tempAlarmTriggeredTime;
 
 int motorSpeed;
 int last_freq;
