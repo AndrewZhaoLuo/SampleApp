@@ -23,15 +23,14 @@ void consoleDisplayFunction(void* data) {
     // Create solar panel state string
     char* state;
     if(solarPanelState){
-      state = "TRUE";
+      state = TRUE_STRING;
     } else {
-      state = "FALSE";
+      state = FALSE_STRING;
     }
 
     // Create battery level string
     char battery[MAX_VALUE_WIDTH];
     snprintf(battery, MAX_VALUE_WIDTH, "%u", batteryLevel);
-
 
     // Create fuel level string
     char fuel[MAX_VALUE_WIDTH];
@@ -59,7 +58,7 @@ void consoleDisplayFunction(void* data) {
     if (batteryConnectedFlag) {
         tft_display_top(battery, TEXT_ALIGN_X, Y_BATTERY);
     } else {
-        tft_display_top("ChkConn", TEXT_ALIGN_X, Y_BATTERY);
+        tft_display_top(CHECK_CONNECTION_STRING, TEXT_ALIGN_X, Y_BATTERY);
     }
     tft_display_top(fuel, TEXT_ALIGN_X, Y_FUEL);
     tft_display_top(power, TEXT_ALIGN_X, Y_POWER);

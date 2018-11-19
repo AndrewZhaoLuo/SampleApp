@@ -23,6 +23,10 @@
 // max width of the string to print
 #define MAX_VALUE_WIDTH 20
 
+#define TRUE_STRING "TRUE"
+#define FALSE_STRING "FALSE"
+#define CHECK_CONNECTION_STRING "ChkConn"
+
 // for TRUE/FALSE
 #include "bool.h"
 

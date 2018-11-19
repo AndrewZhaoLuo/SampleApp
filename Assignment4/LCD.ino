@@ -1,4 +1,4 @@
-// initializes the LCD screen used for the demo and defines 
+// initializes the LCD screen used for the demo and defines
 // c-level bindings to be used to print and get info
 // from the screen
 
@@ -81,12 +81,12 @@ void init_LCD() {
   } else if(identifier == 0x8357) {
     Serial.println(F("Found HX8357D LCD driver"));
   } else if(identifier==0x0101)
-  {     
+  {
       identifier=0x9341;
        Serial.println(F("Found 0x9341 LCD driver"));
   }
   else if(identifier==0x1111)
-  {     
+  {
       identifier=0x9328;
        Serial.println(F("Found 0x9328 LCD driver"));
   }
@@ -100,7 +100,7 @@ void init_LCD() {
     Serial.println(F("Also if using the breakout, double-check that all wiring"));
     Serial.println(F("matches the tutorial."));
     identifier=0x9328;
-  
+
   }
 
   // initializes the arduino LED screen
@@ -117,17 +117,17 @@ extern "C" {
   int tft_get_height() {
     return tft.height();
   }
-  
+
   int tft_get_width() {
     return tft.width();
   }
-  
+
   // Displays str for  aprox. num_secs seconds to console. Max char* length of 20 characters.
   void tft_display_top(const char* str, int cursorX, int cursorY) {
     tft.setCursor(cursorX, cursorY);
     tft.print(str);
   }
-  
+
   void tft_display_bottom(const char* str, int cursorX, int cursorY) {
     tft.setCursor(cursorX, cursorY + tft_get_height()/2);
     tft.print(str);
@@ -144,11 +144,11 @@ extern "C" {
   void tft_fill_rect(int upper_left_x, int upper_left_y, int lower_right_x, int lower_right_y, int color) {
     tft.fillRect(upper_left_x, upper_left_y, lower_right_x, lower_right_y, color);
   }
-  
+
   void tft_set_fontsize(int size) {
     tft.setTextSize(size);
   }
-  
+
   void tft_set_color(int color) {
     tft.setTextColor(color);
   }
@@ -163,7 +163,7 @@ extern "C" {
     TSPoint p = ts.getPoint();
     pinMode(XM, OUTPUT);
     pinMode(YP, OUTPUT);
-  
+
     // Check if the screen has been touched.
     if (p.z > MINPRESSURE && p.z < MAXPRESSURE) {
       int oldX = p.x;
@@ -182,11 +182,11 @@ extern "C" {
       incSolarButton.press(false);
       return 1;
     }
-    
+
     if (incSolarButton.justReleased()) {
       incSolarButton.drawButton();
     }
-    
+
     return 0;
   }
 
@@ -194,14 +194,14 @@ extern "C" {
     TSPoint p = ts.getPoint();
     pinMode(XM, OUTPUT);
     pinMode(YP, OUTPUT);
-  
+
     // Check if the screen has been touched.
     if (p.z > MINPRESSURE && p.z < MAXPRESSURE) {
       int oldX = p.x;
       p.x = map(p.y, TS_MINX, TS_MAXX, tft.width(), 0);
       p.y = (tft.height() - map(oldX, TS_MINY, TS_MAXY, tft.height(), 0)) - 20;
     }
-    
+
     if (decSolarButton.contains(p.x, p.y)) {
       decSolarButton.press(true);
     } else {
@@ -213,7 +213,7 @@ extern "C" {
       decSolarButton.press(false);
       return 1;
     }
-    
+
     if (decSolarButton.justReleased()) {
       decSolarButton.drawButton();
     }
