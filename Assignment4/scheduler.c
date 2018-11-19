@@ -66,10 +66,11 @@ void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
                 invoke(curTCB);
             } else if (level == CYCLE_REAL_TIME && curTCB -> priority == PRIORITY_REAL_TIME) {
                 invoke(curTCB);
-            } else {
-                addToTail(queue, curTCB);
-            }
+            } 
+            addToTail(queue, curTCB);
         }
+
+        return;
     }
 
     reschedule();
