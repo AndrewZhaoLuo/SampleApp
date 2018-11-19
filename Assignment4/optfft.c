@@ -1,3 +1,4 @@
+// taken from ee474 website courtesy one james peckol
 /*******************************************************************************/
 /* optfft.c                                                                    */
 /*                                                                             */
@@ -8,7 +9,7 @@
 /*                                                                             */
 /* - Works only for input arrays of 256 length.                                */
 /* - Requires two arrays of 16-bit ints.  The first contains the samples, the  */
-/*   second contains all zeros.  The samples range from -31 to 32              */ 
+/*   second contains all zeros.  The samples range from -31 to 32              */
 /* - Returns the index of the peak frequency                                   */
 /*******************************************************************************/
 #include "optfft.h"
@@ -47,7 +48,7 @@ signed int i, i1, j, l, l1, l2, t1, t2, u;
 		for(j=0;j<l1;j++){
 			for(i=j;i<256;i+=l2){
 				i1 = i + l1;
-				t1 = (u1[u]*real[i1] - u2[u]*imag[i1])/32; 
+				t1 = (u1[u]*real[i1] - u2[u]*imag[i1])/32;
 				t2 = (u1[u]*imag[i1] + u2[u]*real[i1])/32;
 				real[i1] = real[i]-t1;
 				imag[i1] = imag[i]-t2;
@@ -61,7 +62,7 @@ signed int i, i1, j, l, l1, l2, t1, t2, u;
 	/* Find the highest amplitude value */
 	/* start at index 1 because 0 can hold high values */
 	j=1;
-	l=0;	   	
+	l=0;
 	for ( i=1; i<(128); i++ ) {
 		l1 = square[CEILING(ABS(real[i]))]+square[CEILING(ABS(imag[i]))];
 		if (l1 > l) {
