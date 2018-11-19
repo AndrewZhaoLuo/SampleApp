@@ -31,8 +31,10 @@ void reschedule() {
 
 */
 
+// Dynamically reschedules tasks highest -> lowest priority.
+// POWER_DATA requires global flag
+// KEYPAD_DATA && PANEL_DATA require global flag
 void reschedule() {
-  
   for (int insertPriorityThreshold = 0; insertPriorityThreshold < LENGTH; insertPriorityThreshold++) { // Look at every task
     for (int TCB_NUM = 0; TCB_NUM < LENGTH; TCB_NUM++) {
         TCB* curTCB = &tcbs[TCB_NUM];
@@ -47,6 +49,7 @@ void reschedule() {
     }
   }
 }
+
 // waits until current cycle is over
 void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
     static int curPriority = 0;
@@ -57,28 +60,30 @@ void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
 
     // are we after the completion of a major/minor cycle
     int isMajor = currentTime >= scheduler -> nextEndMajor;
-    int isMinor = currentTime >= scheduler -> nextEndMinor;
+    //int isMinor = currentTime >= scheduler -> nextEndMinor;
 
     // set the priority level we should be running tasks on based on
     // whether we have completed a cycle or not
     cycleLevel level = CYCLE_REAL_TIME;
-    if (isMinor) {
-        scheduler -> nextEndMinor = currentTime + MINOR_CYCLE;
-        level = CYCLE_MINOR;
-    }
+    //if (isMinor) {
+    //    scheduler -> nextEndMinor = currentTime + MINOR_CYCLE;
+    //    level = CYCLE_MINOR;
+    //}
+    
     if (isMajor) {
         scheduler -> nextEndMajor = currentTime + MAJOR_CYCLE;
         level = CYCLE_MAJOR;
+        //print_format("************ MAJOR CYCLE");
     }
 
     // go through TCB queue, executing things if they are high enough priority
     while (queue -> length > 0) {
         TCB* curTCB = getNextTCB(queue);
         //int curPriority = curTCB -> priority;
-        print_format("TCB current priority: %d", curTCB -> priority);
+        //invoke(curTCB);
+       
         if (level == CYCLE_MAJOR) {
             // if a major cycle run everything
-            print_format("************ MAJOR CYCLE");
             invoke(curTCB);
         } if (curTCB -> priority <= curPriority && curTCB -> priority != PRIORITY_LOW) {
             invoke(curTCB);

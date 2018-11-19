@@ -111,7 +111,7 @@ void powerSubsystemFunction(void* data){
   }
   pushSample(powerData->batteryTempBuff, sensorReading1);
   pushSample(powerData->batteryTempBuff, sensorReading2);
-  printBuffer(powerData->batteryTempBuff, 18);
+  // printBuffer(powerData->batteryTempBuff, 18);
 
   unsigned short avgTemp = ((unsigned short)sensorReading1 + (unsigned short)sensorReading2) / 2;
   avgTemp = (unsigned short) convertReadingToTemp(avgTemp);

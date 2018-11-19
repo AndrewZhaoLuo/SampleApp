@@ -98,11 +98,19 @@ void warningAlarmFunction(void* data) {
         //print_format("timeSinceAlarmTriggered: %d", timeSinceAlarmTriggered);
         
         if (timeSinceAlarmTriggered >= FIFTEEN_SECONDS && ((timeSinceAlarmTriggered % 10000) >= 5000)) { // flash for 5 seconds
+          print_display("TEMPERATURE", 0, 120, 2, WHITE);
+          print_display("TEMPERATURE", 0, 120, 2, RED);
+          print_display("TEMPERATURE", 0, 120, 2, WHITE);
+          print_display("TEMPERATURE", 0, 120, 2, RED);
+          print_display("TEMPERATURE", 0, 120, 2, WHITE);
+          print_display("TEMPERATURE", 0, 120, 2, RED);
+          /*
           if (parityAlarm) {
             print_display("TEMPERATURE", 0, 120, 2, RED);
           } else {
             print_display("TEMPERATURE", 0, 120, 2, WHITE);
           }
+          */
           parityAlarm = !parityAlarm;
           //print_format("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Flashing");
         } else {
