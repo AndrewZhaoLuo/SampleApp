@@ -2,21 +2,6 @@
 #include "globals.h"
 #include "print_format.h"
 
-// void pushBack(const int item) {
-//   if(!(circBuf.empty)){
-//     if (circBuf.tail == circBuf.head) {
-//       circBuf.head++;
-//     }
-//   }
-//   circBuf.buffer[circBuf.tail] = item;
-//   circBuf.tail++;
-//   if (circBuf.tail > circBuf.endIndex) {
-//     circBuf.tail = 0;
-//   }
-//   circBuf.empty = FALSE;
-//   batteryLevelPtr = &(circBuf.buffer[circBuf.tail]);
-// }
-
 // Replaces oldest value in buffer with data.
 void pushSample (int buffer[], int data) {
   int curIndex = buffer[BUFFER_INSERT_INDEX];
