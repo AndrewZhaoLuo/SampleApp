@@ -11,7 +11,7 @@ void setup() {
   pinMode(MOTOR_FORWARD_PWM_PIN, OUTPUT);
 
   Serial.begin(BAUD_RATE);
-  Serial1.begin(DEFAULT_FONT_SIZE);
+  Serial1.begin(BAUD_RATE);
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }

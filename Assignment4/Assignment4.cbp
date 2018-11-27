@@ -53,9 +53,21 @@
 		</Unit>
 		<Unit filename="consoleDisplaySubsystem.h" />
 		<Unit filename="globals.h" />
+		<Unit filename="imageCaptureSubsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="imageCaptureSubsystem.h" />
 		<Unit filename="initGlobals.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="keypadSubsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="keypadSubsystem.h" />
+		<Unit filename="optfft.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="optfft.h" />
 		<Unit filename="powerSubsystem.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -79,6 +91,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="solarPanelControlSubsystem.h" />
+		<Unit filename="tables.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="taskqueue.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -87,6 +102,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="thrusterSubsystem.h" />
+		<Unit filename="transportDistanceSubsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="transportDistanceSubsystem.h" />
 		<Unit filename="vehicleCommsSubsystem.cpp" />
 		<Unit filename="vehicleCommsSubsystem.h" />
 		<Unit filename="warningAlarmSubsystem.c">
