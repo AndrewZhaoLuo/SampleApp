@@ -187,6 +187,7 @@ void initialize(){
     solarPanelConnectedFlag = FALSE;
     solarPanelMoveFlag = TRUE;
     transportDistanceFreqConnectedFlag = FALSE;
+    isEarthTerminal = TRUE;
 
     // Initialize data structs
     initPowerData();

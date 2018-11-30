@@ -105,11 +105,10 @@ int freq_buffer[FREQUENCY_BUFFER + BUFFER_METADATA_SIZE];
 // interrupt flags for ISRs
 volatile Bool batteryConnectedFlag;
 volatile long long batteryConnectionTimestamp;
-
 volatile Bool solarPanelConnectedFlag;
 volatile Bool solarPanelMoveFlag;
-
 volatile Bool transportDistanceFreqConnectedFlag;
+volatile Bool isEarthTerminal;
 
 // static allocation for structs to use
 powerSubsystemData powerData;
