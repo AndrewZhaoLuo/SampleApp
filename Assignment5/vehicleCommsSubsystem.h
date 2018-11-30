@@ -3,10 +3,14 @@
 
 #define MIN_DISTANCE_DOCK 102
 
+// for TRUE/FALSE
+#include "bool.h"
+
 typedef struct vehicleCommsDataStruct {
     char* vehicleCommandPtr;
     char* vehicleResponsePtr;
     unsigned short* transportDistPtr;
+    Bool* schedVehicleCommsPtr;
 } vehicleCommsData;
 
 void vehicleCommsFunction(void* data);

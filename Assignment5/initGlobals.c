@@ -120,6 +120,7 @@ void initVehicleData() {
   vehicleData.vehicleCommandPtr = &command;
   vehicleData.vehicleResponsePtr = &response;
   vehicleData.transportDistPtr = &transportDist;
+  vehicleData.schedVehicleCommsPtr = &schedVehicleComms;
 }
 
 void initPanelData() {

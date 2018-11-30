@@ -16,10 +16,13 @@ void vehicleCommsFunction(void* data) {
   // Cast to correct pointer
   vehicleCommsData* vehicleData = (vehicleCommsData*) data;
 
+  // Only if there is a new command to read
+  if (*(vehicleData->schedVehicleCommsPtr)) {
     incomingByte = *(vehicleData->vehicleCommandPtr);
     // Send incoming byte to uno and get response
     Serial1.write(incomingByte);
     Serial.println("SENT");
+  }
 
 
   while (Serial1.available() > 0){

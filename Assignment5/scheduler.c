@@ -44,8 +44,6 @@ void reschedule() {
           if (TCB_NUM == POWER_DATA_TCB && !batteryConnectedFlag) continue;
           // Only connect Keypad_data and panal_data if 
           if ((TCB_NUM == KEYPAD_DATA_TCB || TCB_NUM == PANEL_DATA_TCB) && !(solarPanelConnectedFlag && (solarPanelDeploy | solarPanelRetract))) continue;
-          // Only schedule vehicle comms if new command and terminal currently represents satellite
-          if (TCB_NUM == VEHICLE_DATA_TCB && !schedVehicleComms) continue;
           // Only schedule command system if new command and terminal currently represents earth
           if (TCB_NUM == COMMAND_DATA_TCB && !schedCommandTask) continue;
           addToTail(&queue, &tcbs[TCB_NUM]);
