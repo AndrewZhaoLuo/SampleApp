@@ -23,8 +23,12 @@ typedef struct satelliteComsDataStruct {
     Bool* solarPanelStatePtr;
     Bool* fuelLowPtr;
     Bool* batteryLowPtr;
-
     int* last_freq;
+    char* commandPtr;
+    char* responsePtr;
+    Bool* isEarthTerminalPtr;
+    Bool* schedCommandTaskPtr;
+    Bool* schedVehicleCommsPtr;
 } satelliteComsData;
 
 void satelliteComsFunction(void* data);

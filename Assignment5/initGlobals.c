@@ -86,6 +86,11 @@ void initComsData() {
     comsData.fuelLowPtr = &fuelLow;
     comsData.batteryLowPtr = &batteryLow;
     comsData.last_freq = &last_freq;
+    comsData.commandPtr = &command;
+    comsData.responsePtr = &response;
+    comsData.isEarthTerminalPtr = &isEarthTerminal;
+    comsData.schedCommandTaskPtr = &schedCommandTask;
+    comsData.schedVehicleCommsPtr = &schedVehicleComms;
 }
 
 void initDisplayData() {
@@ -112,8 +117,8 @@ void initWarningData() {
 
 
 void initVehicleData() {
-  vehicleData.vehicleCommandPtr = &vehicleCommand;
-  vehicleData.vehicleResponsePtr = &vehicleResponse;
+  vehicleData.vehicleCommandPtr = &command;
+  vehicleData.vehicleResponsePtr = &response;
   vehicleData.transportDistPtr = &transportDist;
 }
 
@@ -144,6 +149,11 @@ void initImageCaptureData() {
   imageData.last_freq = &last_freq;
 }
 
+void initCommandData() {
+  commandData.commandPtr = &command;
+  commandData.responsePtr = &response;
+}
+
 void initialize(){
     // Initialize globals
     last_freq = -1;
@@ -158,8 +168,8 @@ void initialize(){
     batteryLow = FALSE;
     solarPanelDeploy = FALSE;
     solarPanelRetract = FALSE;
-    vehicleCommand = '\0';
-    vehicleResponse = '\0';
+    command = '\0';
+    response = '\0';
     solarPanelDriveInc = FALSE;
     solarPanelDriveDec = FALSE;
     //batteryLevelPtr = powerBuf;
@@ -168,6 +178,9 @@ void initialize(){
     // temperature alarm
     tempAlarmState = TEMPERATURE_ALARM_NOT_TRIGGERED; // For alarm system
     tempAlarmTriggeredTime = 0;
+    isEarthTerminal = TRUE;
+    schedCommandTask = TRUE;
+    schedVehicleComms = FALSE;
 
     // Initalize data buffers
     initBuffer(batteryBuf, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer
@@ -187,7 +200,6 @@ void initialize(){
     solarPanelConnectedFlag = FALSE;
     solarPanelMoveFlag = TRUE;
     transportDistanceFreqConnectedFlag = FALSE;
-    isEarthTerminal = TRUE;
 
     // Initialize data structs
     initPowerData();
@@ -200,11 +212,12 @@ void initialize(){
     initKeyData();
     initTransportData();
     initImageCaptureData();
+    initCommandData();
 
     // initialize the various data structures for the kernel
     initScheduler(&scheduler);
 
-    initTCB(&tcbs[COMS_DATA_TCB], (void*)&comsData, satelliteComsFunction, PRIORITY_LOW);
+    initTCB(&tcbs[COMS_DATA_TCB], (void*)&comsData, satelliteComsFunction, PRIORITY_HIGH);
     initTCB(&tcbs[THRUSTER_DATA_TCB], (void*)&thrusterData, thrusterSubsystemFunction, PRIORITY_LOW);
     initTCB(&tcbs[POWER_DATA_TCB], (void*)&powerData, powerSubsystemFunction, PRIORITY_LOW);
     initTCB(&tcbs[WARNING_DATA_TCB], (void*)&warningData, warningAlarmFunction, PRIORITY_REAL_TIME);
@@ -214,6 +227,7 @@ void initialize(){
     initTCB(&tcbs[KEYPAD_DATA_TCB], (void*)&keyData, keypadFunction, PRIORITY_HIGH);
     initTCB(&tcbs[DISTANCE_TRANSPORT_DATA_TCB], (void*)&transportData, transportDistanceFunction, PRIORITY_LOW);
     initTCB(&tcbs[IMAGE_CAPTURE_DATA_TCB], (void*)&imageData, imageCaptureFunction, PRIORITY_HIGH);
+    initTCB(&tcbs[COMMAND_DATA_TCB], (void*)&commandData, commandFunction, PRIORITY_HIGH);
 
     initTaskQueue(&queue);
 }

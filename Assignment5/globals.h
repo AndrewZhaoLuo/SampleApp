@@ -40,6 +40,7 @@
 #define KEYPAD_DATA_TCB             7
 #define DISTANCE_TRANSPORT_DATA_TCB 8
 #define IMAGE_CAPTURE_DATA_TCB      9
+#define COMMAND_DATA_TCB            10
 
 #define BAUD_RATE 9600
 #define DEFAULT_FONT_SIZE 2
@@ -59,9 +60,10 @@
 #include "scheduler.h"
 #include "transportDistanceSubsystem.h"
 #include "imageCaptureSubsystem.h"
+#include "commandSubsystem.h"
 
 // length of the TCB queue
-#define LENGTH 10
+#define LENGTH 11
 
 // kernels and stuff
 TCB tcbs[LENGTH];
@@ -87,10 +89,13 @@ Bool solarPanelDriveInc;
 Bool solarPanelDriveDec;
 Bool fuelLow;
 Bool batteryLow;
-char vehicleCommand;
-char vehicleResponse;
+char command;
+char response;
 unsigned short batteryTemp;
 unsigned short transportDist;
+Bool isEarthTerminal;
+Bool schedCommandTask;
+Bool schedVehicleComms;
 
 // data buffers
 unsigned int timeIntervalBuf[16 + BUFFER_METADATA_SIZE];
@@ -108,7 +113,6 @@ volatile long long batteryConnectionTimestamp;
 volatile Bool solarPanelConnectedFlag;
 volatile Bool solarPanelMoveFlag;
 volatile Bool transportDistanceFreqConnectedFlag;
-volatile Bool isEarthTerminal;
 
 // static allocation for structs to use
 powerSubsystemData powerData;
@@ -121,6 +125,7 @@ solarPanelControlData panelData;
 keypadData keyData;
 transportDistanceData transportData;
 imageCaptureData imageData;
+commandManagementData commandData;
 
 void initialize();
 

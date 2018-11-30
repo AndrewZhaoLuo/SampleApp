@@ -5,8 +5,9 @@
 #include "bool.h"
 
 typedef struct commandDataStruct {
-  Bool* isEarthTerminal;
-} commandData;
+  char* commandPtr;
+  char* responsePtr;
+} commandManagementData;
 
 /*
 See specification/report for full functionality
