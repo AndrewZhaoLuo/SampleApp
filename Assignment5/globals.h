@@ -33,8 +33,8 @@
 #define COMS_DATA_TCB               0
 #define THRUSTER_DATA_TCB           1
 #define POWER_DATA_TCB              2
-#define WARNING_DATA_TCB            3
-#define DISPLAY_DATA_TCB            4
+#define DISPLAY_DATA_TCB            3
+#define WARNING_DATA_TCB            4
 #define VEHICLE_DATA_TCB            5
 #define PANEL_DATA_TCB              6
 #define KEYPAD_DATA_TCB             7
@@ -96,6 +96,10 @@ unsigned short transportDist;
 Bool isEarthTerminal;
 Bool schedCommandTask;
 Bool schedVehicleComms;
+Bool startTasks;
+Bool displayOn;
+char* responseMessage;
+Bool isNewResponse;
 
 // data buffers
 unsigned int timeIntervalBuf[16 + BUFFER_METADATA_SIZE];

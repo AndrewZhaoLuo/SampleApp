@@ -41,6 +41,7 @@ typedef struct consoleDisplayDataStruct {
     Bool* batteryLowPtr;
     unsigned short* batteryTempPtr;
     unsigned short* transportDistPtr;
+    Bool* displayOnPtr;
 } consoleDisplayData;
 
 /*

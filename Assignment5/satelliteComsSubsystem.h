@@ -29,6 +29,8 @@ typedef struct satelliteComsDataStruct {
     Bool* isEarthTerminalPtr;
     Bool* schedCommandTaskPtr;
     Bool* schedVehicleCommsPtr;
+    char** responseMessagePtr; 
+    Bool* isNewResponsePtr;
 } satelliteComsData;
 
 void satelliteComsFunction(void* data);

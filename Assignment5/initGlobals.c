@@ -91,6 +91,8 @@ void initComsData() {
     comsData.isEarthTerminalPtr = &isEarthTerminal;
     comsData.schedCommandTaskPtr = &schedCommandTask;
     comsData.schedVehicleCommsPtr = &schedVehicleComms;
+    comsData.responseMessagePtr = &responseMessage;
+    comsData.isNewResponsePtr = &isNewResponse;
 }
 
 void initDisplayData() {
@@ -104,6 +106,7 @@ void initDisplayData() {
     displayData.batteryLowPtr = &batteryLow;
     displayData.batteryTempPtr = &batteryTemp;
     displayData.transportDistPtr = &transportDist;
+    displayData.displayOnPtr = &displayOn;
 }
 
 void initWarningData() {
@@ -152,7 +155,10 @@ void initImageCaptureData() {
 
 void initCommandData() {
   commandData.commandPtr = &command;
-  commandData.responsePtr = &response;
+  commandData.responseMessagePtr = &responseMessage;
+  commandData.startTasksPtr = &startTasks;
+  commandData.displayOnPtr = &displayOn;
+  commandData.isNewResponsePtr = &isNewResponse;
 }
 
 void initialize(){
@@ -182,6 +188,10 @@ void initialize(){
     isEarthTerminal = TRUE;
     schedCommandTask = TRUE;
     schedVehicleComms = FALSE;
+    startTasks = FALSE;
+    displayOn = FALSE;
+    responseMessage = "";
+    isNewResponse = FALSE;
 
     // Initalize data buffers
     initBuffer(batteryBuf, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer

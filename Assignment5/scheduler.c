@@ -35,19 +35,27 @@ void reschedule() {
 // POWER_DATA requires global flag
 // KEYPAD_DATA && PANEL_DATA require global flag
 void reschedule() {
-  for (int insertPriorityThreshold = 0; insertPriorityThreshold < LENGTH; insertPriorityThreshold++) { // Look at every task
-    for (int TCB_NUM = 0; TCB_NUM < LENGTH; TCB_NUM++) {
-        TCB* curTCB = &tcbs[TCB_NUM];
-        int curPriority = curTCB -> priority;
-        if (curPriority == insertPriorityThreshold) {
-          // Only connect power_data if battery connected
-          if (TCB_NUM == POWER_DATA_TCB && !batteryConnectedFlag) continue;
-          // Only connect Keypad_data and panal_data if 
-          if ((TCB_NUM == KEYPAD_DATA_TCB || TCB_NUM == PANEL_DATA_TCB) && !(solarPanelConnectedFlag && (solarPanelDeploy | solarPanelRetract))) continue;
-          // Only schedule command system if new command and terminal currently represents earth
-          if (TCB_NUM == COMMAND_DATA_TCB && !schedCommandTask) continue;
-          addToTail(&queue, &tcbs[TCB_NUM]);
-        }
+  // If we have not yet been told to start all the tasks, only cycle thru satellite comms and command task
+  if (!startTasks) {
+    addToTail(&queue, &tcbs[COMS_DATA_TCB]);
+    addToTail(&queue, &tcbs[COMMAND_DATA_TCB]);
+  } else {
+    for (int insertPriorityThreshold = 0; insertPriorityThreshold < LENGTH; insertPriorityThreshold++) { // Look at every task
+      for (int TCB_NUM = 0; TCB_NUM < LENGTH; TCB_NUM++) {
+          TCB* curTCB = &tcbs[TCB_NUM];
+          int curPriority = curTCB -> priority;
+          if (curPriority == insertPriorityThreshold) {
+            // Only connect power_data if battery connected
+            if (TCB_NUM == POWER_DATA_TCB && !batteryConnectedFlag) continue;
+            // Only connect Keypad_data and panal_data if 
+            if ((TCB_NUM == KEYPAD_DATA_TCB || TCB_NUM == PANEL_DATA_TCB) && !(solarPanelConnectedFlag && (solarPanelDeploy | solarPanelRetract))) continue;
+            // Only schedule command system if new command and terminal currently represents earth
+            if (TCB_NUM == COMMAND_DATA_TCB && !schedCommandTask) continue;
+            // Only schedule displaying warning data if the display is on
+            if (TCB_NUM == WARNING_DATA_TCB && !displayOn) continue;
+            addToTail(&queue, &tcbs[TCB_NUM]);
+          }
+      }
     }
   }
 }

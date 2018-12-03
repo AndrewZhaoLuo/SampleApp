@@ -6,12 +6,17 @@
 
 typedef struct commandDataStruct {
   char* commandPtr;
-  char* responsePtr;
+  char** responseMessagePtr;
+  Bool* startTasksPtr;
+  Bool* displayOnPtr;
+  Bool* isNewResponsePtr;
 } commandManagementData;
 
 /*
 See specification/report for full functionality
 */
 void commandFunction(void* data);
+
+void printIfSystemOn (char* message, commandManagementData* data);
 
 #endif
