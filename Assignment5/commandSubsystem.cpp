@@ -36,9 +36,62 @@ void commandFunction(void* data) {
       *(comManData->isNewResponsePtr) = TRUE;
     }
   } else if (command == 't' || command == 'T') {
-    
+    // Since value must be between 0 and 65535, always make user type 5 digits
+    while(Serial.available() < NUMBER_OF_DIGITS){
+      // Wait until a valid number has arrived
+    }
+    char buffer[NUMBER_OF_DIGITS+1];
+    int i;
+    for (i = 0; i < NUMBER_OF_DIGITS; i++){
+      buffer[i] = Serial.read();
+    }
+    buffer[i+1] = '\0';
+    int thrustCommand = atoi(buffer);
+    if(thrustCommand >= 0 && thrustCommand <= 65536){
+      *(comManData->thrustCommandPtr) = thrustCommand;
+      *(comManData->userThrustValuePtr) = TRUE;
+      *(comManData->responseMessagePtr) = "A: T";
+      *(comManData->isNewResponsePtr) = TRUE;
+    } else {
+      *(comManData->responseMessagePtr) = "E";
+      *(comManData->isNewResponsePtr) = TRUE;
+    }
   } else if (command == 'm' || command == 'M') {
-    
+    // Since value must be a character, wait for the next input letter
+    while(Serial.available() < 1){
+      // Wait until a valid number has arrived
+    }
+    char payload = Serial.read();
+
+    // Determind the payload that is being asked for and send request body to satellite comms
+    if(payload == 'b' || payload == 'B'){
+      *(comManData->responseMessagePtr) = "M: Battery Level = ";
+      *(comManData->isNewResponsePtr) = TRUE;
+    } else if(payload == 'f' || payload == 'F'){
+      *(comManData->responseMessagePtr) = "M: Fuel Level = ";
+      *(comManData->isNewResponsePtr) = TRUE;
+    } else if(payload == 'c' || payload == 'C'){
+      *(comManData->responseMessagePtr) = "M: Power Consumption = ";
+      *(comManData->isNewResponsePtr) = TRUE;
+    } else if(payload == 's' || payload == 'S'){
+      *(comManData->responseMessagePtr) = "M: Solar Panel State = ";
+      *(comManData->isNewResponsePtr) = TRUE;
+    } else if(payload == 'i' || payload == 'I'){
+      *(comManData->responseMessagePtr) = "M: Image Data = ";
+      *(comManData->isNewResponsePtr) = TRUE;
+    } else if(payload == 'g' || payload == 'G'){
+      *(comManData->responseMessagePtr) = "M: Power Generation = ";
+      *(comManData->isNewResponsePtr) = TRUE;
+    } else if(payload == 't' || payload == 'T'){
+      *(comManData->responseMessagePtr) = "M: Battery Temperature = ";
+      *(comManData->isNewResponsePtr) = TRUE;
+    } else if(payload == 'd' || payload == 'D'){
+      *(comManData->responseMessagePtr) = "M: Transport Distance = ";
+      *(comManData->isNewResponsePtr) = TRUE;
+    } else {
+      *(comManData->responseMessagePtr) = "Invalid payload";
+      *(comManData->isNewResponsePtr) = TRUE;
+    }
   } else { // Incorrect/non-existant command
     if(*(comManData->startTasksPtr)){
       *(comManData->responseMessagePtr) = "E";

@@ -100,6 +100,7 @@ Bool startTasks;
 Bool displayOn;
 char* responseMessage;
 Bool isNewResponse;
+Bool userThrustValue;
 
 // data buffers
 unsigned int timeIntervalBuf[16 + BUFFER_METADATA_SIZE];

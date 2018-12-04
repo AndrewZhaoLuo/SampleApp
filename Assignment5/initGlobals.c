@@ -93,6 +93,9 @@ void initComsData() {
     comsData.schedVehicleCommsPtr = &schedVehicleComms;
     comsData.responseMessagePtr = &responseMessage;
     comsData.isNewResponsePtr = &isNewResponse;
+    comsData.userThrustValuePtr = &userThrustValue;
+    comsData.batteryTempPtr = &batteryTemp;
+    comsData.transportDistPtr = &transportDist;
 }
 
 void initDisplayData() {
@@ -159,6 +162,8 @@ void initCommandData() {
   commandData.startTasksPtr = &startTasks;
   commandData.displayOnPtr = &displayOn;
   commandData.isNewResponsePtr = &isNewResponse;
+  commandData.userThrustValuePtr = &userThrustValue;
+  commandData.thrustCommandPtr = &thrustCommand;
 }
 
 void initialize(){
@@ -192,6 +197,7 @@ void initialize(){
     displayOn = FALSE;
     responseMessage = "";
     isNewResponse = FALSE;
+    userThrustValue = FALSE;
 
     // Initalize data buffers
     initBuffer(batteryBuf, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer

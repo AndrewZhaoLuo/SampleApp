@@ -42,7 +42,15 @@ void satelliteComsFunction(void* data) {
     *(comsData->schedVehicleCommsPtr) = FALSE;
   }
 
-  *(comsData->thrustCommandPtr) = randomInteger(RANDOM_MIN_CMD, RANDOM_MAX_CMD);
+  // If user at earth terminal provided a thrust command, use that. Otherwise, generate random command
+  if(*(comsData->userThrustValuePtr)){
+    // The command was already set by the command subsystem, so don't generate a random one
+    Serial.print("Thruster value: ");
+    Serial.println(*(comsData->thrustCommandPtr));
+    *(comsData->userThrustValuePtr) = FALSE;
+  } else {
+    *(comsData->thrustCommandPtr) = randomInteger(RANDOM_MIN_CMD, RANDOM_MAX_CMD);
+  }
 
   // Set battery low
   if(*(comsData->batteryLevelPtr) <= LOW_LEVEL_BATTERY_WARNING){
@@ -65,7 +73,35 @@ void satelliteComsFunction(void* data) {
 
   // If there is a response, print it
   if (*(comsData -> isNewResponsePtr)){
-    Serial.println(*(comsData->responseMessagePtr));
+    // Check if there was a request for data
+    if(*(comsData->responseMessagePtr) == "M: Battery Level = "){
+      Serial.print(*(comsData->responseMessagePtr));
+      Serial.println(*(comsData->batteryLevelPtr));
+    }else if(*(comsData->responseMessagePtr) == "M: Fuel Level = "){
+      Serial.print(*(comsData->responseMessagePtr));
+      Serial.println(*(comsData->fuelLevelPtr));
+    }else if(*(comsData->responseMessagePtr) == "M: Power Consumption = "){
+      Serial.print(*(comsData->responseMessagePtr));
+      Serial.println(*(comsData->powerConsumptionPtr));
+    }else if(*(comsData->responseMessagePtr) == "M: Solar Panel State = "){
+      Serial.print(*(comsData->responseMessagePtr));
+      Serial.println(*(comsData->solarPanelStatePtr));
+    }else if(*(comsData->responseMessagePtr) == "M: Image Data = "){
+      Serial.print(*(comsData->responseMessagePtr));
+      Serial.println(*(comsData->last_freq));
+    }else if(*(comsData->responseMessagePtr) == "M: Power Generation = "){
+      Serial.print(*(comsData->responseMessagePtr));
+      Serial.println(*(comsData->powerGenerationPtr));
+    }else if(*(comsData->responseMessagePtr) == "M: Battery Temperature = "){
+      Serial.print(*(comsData->responseMessagePtr));
+      Serial.println(*(comsData->batteryTempPtr));
+    }else if(*(comsData->responseMessagePtr) == "M: Transport Distance = "){
+      Serial.print(*(comsData->responseMessagePtr));
+      Serial.println(*(comsData->transportDistPtr));
+    } else {
+      Serial.println(*(comsData->responseMessagePtr));
+    }
+    
     *(comsData->isNewResponsePtr) = FALSE;
   }
     // TODO: THE FOLLOWING MUST PRINT AT A FIVE SECOND RATE
