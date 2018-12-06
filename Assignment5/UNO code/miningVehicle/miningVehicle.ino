@@ -33,14 +33,28 @@ void loop() {
       rf.write('A');
     }
 
-    // Start image capture
-    else if (incomingByte == 's' || incomingByte == 'S') {
-      rf.write('W');
+    // Image complete
+    else if (incomingByte == 'W') {
+      Serial.print("Response: ");
+      Serial.println(incomingByte);
+      rf.write(static_cast<byte>('\0'));
     }
     
-    // Send image data
-    else if (incomingByte == 'i' || incomingByte == 'I') {
-      rf.write('P');
+    // Image data is sent
+    else if (incomingByte == 'P') {
+      Serial.print("Response: ");
+      Serial.println(incomingByte);
+
+      byte* data = new byte[4];
+      rf.readBytes(data, 4);
+
+      int val = data[3] << 24;
+      val = val | (data[2] << 16);
+      val = val | (data[1] << 8);
+      val = val | data[0];
+      
+      Serial.print("Image Data: ");
+      Serial.println(val);
     }
     
     // Receive lift off and docking response from satellite

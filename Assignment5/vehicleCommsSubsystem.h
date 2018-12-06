@@ -11,6 +11,7 @@ typedef struct vehicleCommsDataStruct {
     char* vehicleResponsePtr;
     unsigned short* transportDistPtr;
     Bool* schedVehicleCommsPtr;
+    int* last_freq;
 } vehicleCommsData;
 
 void vehicleCommsFunction(void* data);

@@ -66,10 +66,12 @@ void satelliteComsFunction(void* data) {
       *(comsData->fuelLowPtr) = FALSE;
   }
 
+  // No longer necessary 
+  /*
   if (*(comsData -> last_freq) != NO_NEW_FREQUENCY_INFO){
       //print_format("Image frequency: %d", *comsData -> last_freq);
       *(comsData -> last_freq) = NO_NEW_FREQUENCY_INFO;
-  }
+  }*/
 
   // If there is a response, print it
   if (*(comsData -> isNewResponsePtr)){
@@ -104,6 +106,7 @@ void satelliteComsFunction(void* data) {
     
     *(comsData->isNewResponsePtr) = FALSE;
   }
+
     // TODO: THE FOLLOWING MUST PRINT AT A FIVE SECOND RATE
     /*
     print_format("\tFuel Low Warning: %d\n\tBattery Low Warning: %d\n", *(comsData->fuelLowPtr), *(comsData->batteryLowPtr));

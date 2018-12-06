@@ -19,12 +19,13 @@ void commandFunction(void* data) {
     *(comManData->startTasksPtr) = TRUE;
     *(comManData->responseMessagePtr) = "A: S";
     *(comManData->isNewResponsePtr) = TRUE;
-  } else if (command == 'p' || command == 'P') {
-    if(*(comManData->startTasksPtr)){
+  }
+
+  else if(*(comManData->startTasksPtr)){
+  if (command == 'p' || command == 'P') {
       *(comManData->startTasksPtr) = FALSE;
       *(comManData->responseMessagePtr) = "A: P";
       *(comManData->isNewResponsePtr) = TRUE;
-    }
   } else if (command == 'd' || command == 'D') {
     if(*(comManData->displayOnPtr)){
       *(comManData->displayOnPtr) = FALSE;
@@ -97,5 +98,6 @@ void commandFunction(void* data) {
       *(comManData->responseMessagePtr) = "E";
       *(comManData->isNewResponsePtr) = TRUE;
     }
+  }
   }
 }

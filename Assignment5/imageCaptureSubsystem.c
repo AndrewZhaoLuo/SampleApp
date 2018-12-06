@@ -29,5 +29,5 @@ void imageCaptureFunction(void* data) {
 
     pushSample(imageData -> freq_buffer, frequency);
     *(imageData -> last_freq) = frequency;
-    //print_format("COOL FREQUENCY: %d", frequency);
+    //print_format("COOL FREQUENCY: %d", *(imageData->last_freq));
 }

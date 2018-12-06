@@ -12,6 +12,8 @@ extern "C" {
 char incomingByte;
 char incomingResponse;
 
+int numDigits(int number);
+
 void vehicleCommsFunction(void* data) {
   // Cast to correct pointer
   vehicleCommsData* vehicleData = (vehicleCommsData*) data;
@@ -36,14 +38,6 @@ void vehicleCommsFunction(void* data) {
       Serial.print("A: ");
       Serial.println((char) toupper(incomingByte));
     }
-    // Image complete
-    else if (incomingResponse == 'W') {
-      Serial.println("W");
-    }
-    // Image data
-    else if (incomingResponse == 'P') {
-      Serial.println("P");
-    }
 
     // Request for transport lift-off
     if(incomingResponse == 't' || incomingResponse == 'T'){
@@ -54,5 +48,38 @@ void vehicleCommsFunction(void* data) {
     if((incomingResponse == 'd' && *(vehicleData->transportDistPtr) <= 102) || (incomingResponse == 'D' && *(vehicleData->transportDistPtr) <= 102)){
       Serial1.write('C');
     }
+
+    // Start image capture
+    if(incomingResponse == 's' || incomingResponse == 'S'){
+      Serial1.write('W');
+    }
+
+    // Send image data
+    if(incomingResponse == 'i' || incomingResponse == 'I'){
+      Serial1.write('P');
+      int frequency = *(vehicleData->last_freq);
+      int digits = numDigits(frequency);
+
+      // Convert to 4 bytes to send over serial
+      Serial.print("Frequency: ");
+      Serial.println(frequency);
+      
+      byte buf[4];
+      buf[0] = frequency & 255;
+      buf[1] = (frequency >> 8) & 255;
+      buf[2] = (frequency >> 16) & 255;
+      buf[3] = (frequency >> 24) & 255;
+      Serial1.write(buf, sizeof(buf));
+
+    }
   }
+}
+
+int numDigits(int number){
+  int digits = 0;
+  while(number){
+    number /= 10;
+    digits++;
+  }
+  return digits;
 }
