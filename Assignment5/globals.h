@@ -64,6 +64,7 @@
 #include "imageCaptureSubsystem.h"
 #include "commandSubsystem.h"
 #include "pirateDetectionSubsystem.h"
+#include "pirateManagementSubsystem.h"
 
 // length of the TCB queue
 #define LENGTH 12
@@ -106,6 +107,8 @@ Bool isNewResponse;
 Bool userThrustValue;
 Bool pirateDetected;
 int pirateDistance;
+Bool firePhasor;
+Bool fireTorpedo;
 
 // data buffers
 unsigned int timeIntervalBuf[16 + BUFFER_METADATA_SIZE];
@@ -137,6 +140,7 @@ transportDistanceData transportData;
 imageCaptureData imageData;
 commandManagementData commandData;
 pirateDetectionData detectionData;
+pirateManagementData managementData;
 
 void initialize();
 

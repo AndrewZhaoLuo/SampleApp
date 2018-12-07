@@ -172,6 +172,12 @@ void initPirateDetectionData() {
     detectionData.pirateDetected = &pirateDetected;
 }
 
+void initPirateManagementData() {
+    managementData.pirateDistance = &pirateDistance;
+    managementData.firePhasor = &firePhasor;
+    managementData.fireTorpedo = &fireTorpedo;
+}
+
 void initialize(){
     // Initialize globals
     last_freq = -1;
@@ -206,6 +212,8 @@ void initialize(){
     userThrustValue = FALSE;
     pirateDistance = 1000;
     pirateDetected = FALSE;
+    firePhasor = FALSE;
+    fireTorpedo = FALSE;
 
     // Initalize data buffers
     initBuffer(batteryBuf, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer
@@ -238,6 +246,7 @@ void initialize(){
     initImageCaptureData();
     initCommandData();
     initPirateDetectionData();
+    initPirateManagementData();
 
     // initialize the various data structures for the kernel
     initScheduler(&scheduler);
