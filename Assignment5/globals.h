@@ -43,6 +43,7 @@
 #define IMAGE_CAPTURE_DATA_TCB      9
 #define COMMAND_DATA_TCB            10
 #define PIRATE_DETECTION_TCB        11
+#define PIRATE_MANAGEMENT_TCB       12
 
 #define BAUD_RATE 9600
 #define DEFAULT_FONT_SIZE 2
@@ -67,7 +68,7 @@
 #include "pirateManagementSubsystem.h"
 
 // length of the TCB queue
-#define LENGTH 12
+#define LENGTH 13
 
 // kernels and stuff
 TCB tcbs[LENGTH];

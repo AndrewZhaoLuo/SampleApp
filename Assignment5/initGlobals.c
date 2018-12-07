@@ -263,6 +263,7 @@ void initialize(){
     initTCB(&tcbs[IMAGE_CAPTURE_DATA_TCB], (void*)&imageData, imageCaptureFunction, PRIORITY_HIGH);
     initTCB(&tcbs[COMMAND_DATA_TCB], (void*)&commandData, commandFunction, PRIORITY_HIGH);
     initTCB(&tcbs[PIRATE_DETECTION_TCB], (void*)&detectionData, pirateDetectionFunction, PRIORITY_HIGH);
+    initTCB(&tcbs[PIRATE_MANAGEMENT_TCB], (void*)&managementData, pirateManagementFunction, PRIORITY_HIGH);
 
     initTaskQueue(&queue);
 }

@@ -47,12 +47,14 @@ void reschedule() {
           if (curPriority == insertPriorityThreshold) {
             // Only connect power_data if battery connected
             if (TCB_NUM == POWER_DATA_TCB && !batteryConnectedFlag) continue;
-            // Only connect Keypad_data and panal_data if 
+            // Only connect Keypad_data and panal_data if
             if ((TCB_NUM == KEYPAD_DATA_TCB || TCB_NUM == PANEL_DATA_TCB) && !(solarPanelConnectedFlag && (solarPanelDeploy | solarPanelRetract))) continue;
             // Only schedule command system if new command and terminal currently represents earth
             if (TCB_NUM == COMMAND_DATA_TCB && !schedCommandTask) continue;
             // Only schedule displaying warning data if the display is on
             if (TCB_NUM == WARNING_DATA_TCB && !displayOn) continue;
+            // Only schedule management system if pirates in our mists
+            if (TCB_NUM == PIRATE_MANAGEMENT_TCB && !pirateDetected) continue;
             addToTail(&queue, &tcbs[TCB_NUM]);
           }
       }
@@ -79,7 +81,7 @@ void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
     //    scheduler -> nextEndMinor = currentTime + MINOR_CYCLE;
     //    level = CYCLE_MINOR;
     //}
-    
+
     if (isMajor) {
         scheduler -> nextEndMajor = currentTime + MAJOR_CYCLE;
         level = CYCLE_MAJOR;
@@ -91,7 +93,7 @@ void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
         TCB* curTCB = getNextTCB(queue);
         //int curPriority = curTCB -> priority;
         //invoke(curTCB);
-       
+
         if (level == CYCLE_MAJOR) {
             // if a major cycle run everything
             invoke(curTCB);
@@ -101,7 +103,7 @@ void scheduleAndRun(Scheduler* scheduler, Taskqueue* queue) {
     }
         /*
         if (curTCB -> priority != curPriority) continue; // Skip
-        
+
         if (level == CYCLE_MAJOR) {
             // if a major cycle run everything
             invoke(curTCB);
