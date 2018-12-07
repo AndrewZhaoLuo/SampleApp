@@ -63,14 +63,13 @@ void vehicleCommsFunction(void* data) {
       // Convert to 4 bytes to send over serial
       Serial.print("Frequency: ");
       Serial.println(frequency);
-      
+
       byte buf[4];
       buf[0] = frequency & 255;
       buf[1] = (frequency >> 8) & 255;
       buf[2] = (frequency >> 16) & 255;
       buf[3] = (frequency >> 24) & 255;
       Serial1.write(buf, sizeof(buf));
-
     }
   }
 }

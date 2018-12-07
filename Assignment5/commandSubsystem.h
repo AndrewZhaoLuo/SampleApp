@@ -14,6 +14,8 @@ typedef struct commandDataStruct {
   Bool* displayOnPtr;
   Bool* isNewResponsePtr;
   Bool* userThrustValuePtr;
+  Bool* firePhasor;
+  Bool* fireTorpedo;
   unsigned int* thrustCommandPtr;
 } commandManagementData;
 

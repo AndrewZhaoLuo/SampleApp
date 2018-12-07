@@ -33,6 +33,7 @@
 		</Compiler>
 		<Unit filename="Assignment2Arduino.ino" />
 		<Unit filename="Assignment3.ino" />
+		<Unit filename="Assignment5.ino" />
 		<Unit filename="LCD.h" />
 		<Unit filename="LCD.ino" />
 		<Unit filename="TCB.c">
@@ -48,6 +49,8 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="clock.h" />
+		<Unit filename="commandSubsystem.cpp" />
+		<Unit filename="commandSubsystem.h" />
 		<Unit filename="consoleDisplaySubsystem.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -68,6 +71,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="optfft.h" />
+		<Unit filename="pirateDetectionSubsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pirateDetectionSubsystem.h" />
+		<Unit filename="pirateManagementSubsystem.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="pirateManagementSubsystem.h" />
 		<Unit filename="powerSubsystem.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -81,6 +92,7 @@
 		<Unit filename="satelliteComsSubsystem.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="satelliteComsSubsystem.cpp" />
 		<Unit filename="satelliteComsSubsystem.h" />
 		<Unit filename="scheduler.c">
 			<Option compilerVar="CC" />

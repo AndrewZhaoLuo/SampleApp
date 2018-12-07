@@ -47,5 +47,8 @@ void pirateDetectionFunction(void* data) {
       } else {
         *(detectionData -> pirateDetected) = FALSE;
       }
+
+      //print_format("Detected: %d, meters %d, freq %d", *(detectionData -> pirateDetected), *(detectionData -> pirateDistance), (int)frequency);
+      //print_format("Phasors fire: %d, torpedos fire: %d", firePhasor, fireTorpedo);
     }
 }

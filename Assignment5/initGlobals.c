@@ -165,6 +165,8 @@ void initCommandData() {
   commandData.isNewResponsePtr = &isNewResponse;
   commandData.userThrustValuePtr = &userThrustValue;
   commandData.thrustCommandPtr = &thrustCommand;
+  commandData.firePhasor = &firePhasor;
+  commandData.fireTorpedo = &fireTorpedo;
 }
 
 void initPirateDetectionData() {
