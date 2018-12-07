@@ -17,10 +17,10 @@ void pirateDetectionFunction(void* data) {
       for(int i = 0; i < 10000; i++){
         prev = curr;
         curr = analogRead(PIRATE_DETECTION_PIN);
-        if(curr < CUTOFF && prev >= CUTOFF){
+        if(curr < DETECTION_CUTOFF && prev >= DETECTION_CUTOFF){
           count++;
         }
-        if(count == ENOUGH_SAMPLES){
+        if(count == DETECTION_ENOUGH_SAMPLES){
           break;
         }
       }
@@ -34,11 +34,11 @@ void pirateDetectionFunction(void* data) {
       double durationMS = ((double) duration) / CONVERT_TO_MILLIS;
 
       double frequency = ((double) count)/ durationMS;
-      int meters = frequency - TRANSLATION_OFFSET;
-      if (meters > MAX_DISTANCE) {
-        meters = MAX_DISTANCE;
-      } else if (meters < MIN_DISTANCE) {
-          meters = MIN_DISTANCE;
+      int meters = frequency - DETECTION_TRANSLATION_OFFSET;
+      if (meters > DETECTION_MAX_DISTANCE) {
+        meters = DETECTION_MAX_DISTANCE;
+      } else if (meters < DETECTION_MIN_DISTANCE) {
+          meters = DETECTION_MIN_DISTANCE;
       }
       *(detectionData -> pirateDistance) = meters;
 
