@@ -15,7 +15,7 @@
 #define CONVERT_TO_MILLIS 1000.0
 
 typedef struct pirateDetectionStruct {
-    unsigned int* pirateDistance;
+    int* pirateDistance;
     Bool* pirateDetected;
 } pirateDetectionData;
 

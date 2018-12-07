@@ -167,6 +167,11 @@ void initCommandData() {
   commandData.thrustCommandPtr = &thrustCommand;
 }
 
+void initPirateDetectionData() {
+    detectionData.pirateDistance = &pirateDistance;
+    detectionData.pirateDetected = &pirateDetected;
+}
+
 void initialize(){
     // Initialize globals
     last_freq = -1;
@@ -199,6 +204,8 @@ void initialize(){
     responseMessage = "";
     isNewResponse = FALSE;
     userThrustValue = FALSE;
+    pirateDistance = 1000;
+    pirateDetected = FALSE;
 
     // Initalize data buffers
     initBuffer(batteryBuf, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer
@@ -210,7 +217,6 @@ void initialize(){
     initBuffer(fft_out, FFT_BUFFER_SIZE + BUFFER_METADATA_SIZE);
     initBuffer(freq_buffer, FREQUENCY_BUFFER + BUFFER_METADATA_SIZE);
     initBuffer(batteryTempBuff, 16 + BUFFER_METADATA_SIZE);
-
 
     // interrupt flags
     batteryConnectedFlag = FALSE;
@@ -231,6 +237,7 @@ void initialize(){
     initTransportData();
     initImageCaptureData();
     initCommandData();
+    initPirateDetectionData();
 
     // initialize the various data structures for the kernel
     initScheduler(&scheduler);

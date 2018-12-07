@@ -62,6 +62,7 @@
 #include "transportDistanceSubsystem.h"
 #include "imageCaptureSubsystem.h"
 #include "commandSubsystem.h"
+#include "pirateDetectionSubsystem.h"
 
 // length of the TCB queue
 #define LENGTH 11
@@ -102,6 +103,8 @@ Bool displayOn;
 char* responseMessage;
 Bool isNewResponse;
 Bool userThrustValue;
+Bool pirateDetected;
+int pirateDistance;
 
 // data buffers
 unsigned int timeIntervalBuf[16 + BUFFER_METADATA_SIZE];
@@ -132,6 +135,7 @@ keypadData keyData;
 transportDistanceData transportData;
 imageCaptureData imageData;
 commandManagementData commandData;
+pirateDetectionData detectionData;
 
 void initialize();
 
