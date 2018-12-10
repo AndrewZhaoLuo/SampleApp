@@ -109,10 +109,10 @@ void commandFunction(void* data) {
           *(comManData->responseMessagePtr) = "Invalid payload";
           *(comManData->isNewResponsePtr) = TRUE;
         }
-      } else if (command == '1') {
+      } else if (command == '1' && *(comManData ->pirateDetected)) {
           // fire phasors
           *(comManData -> firePhasor) = TRUE;
-      } else if (command == '2') {
+      } else if (command == '2' && *(comManData ->pirateDetected)) {
           // fire torpedos
           *(comManData -> fireTorpedo) = TRUE;
       }else { // Incorrect/non-existant command

@@ -171,6 +171,7 @@ void initCommandData() {
   commandData.thrustCommandPtr = &thrustCommand;
   commandData.firePhasor = &firePhasor;
   commandData.fireTorpedo = &fireTorpedo;
+  commandData.pirateDetected = &pirateDetected;
   commandData.initials = &initials;
   commandData.date = &date;
 }

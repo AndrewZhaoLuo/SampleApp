@@ -20,6 +20,7 @@ typedef struct commandDataStruct {
   Bool* userThrustValuePtr;
   Bool* firePhasor;
   Bool* fireTorpedo;
+  Bool* pirateDetected;
   unsigned int* thrustCommandPtr;
   char** initials;
   char** date;
