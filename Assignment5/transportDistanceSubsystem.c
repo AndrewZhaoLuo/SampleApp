@@ -22,7 +22,7 @@ void transportDistanceFunction(void* data) {
       int count = 0;
 
       unsigned long long startTime = getTimeMillis();
-      for(int i = 0; i < 10000; i++){
+      for(int i = 0; i < MAX_SAMPLES; i++){
         prev = curr;
         curr = analogRead(DISTANCE_TRANSPORT_PIN);
         if(curr < CUTOFF && prev >= CUTOFF){

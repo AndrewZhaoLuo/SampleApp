@@ -61,11 +61,17 @@ void vehicleCommsFunction(void* data) {
       Serial.print("Frequency: ");
       Serial.println(frequency);
 
-      byte buf[4];
-      buf[0] = frequency & 255;
-      buf[1] = (frequency >> 8) & 255;
-      buf[2] = (frequency >> 16) & 255;
-      buf[3] = (frequency >> 24) & 255;
+      static int BUF_LENGTH = 4;
+      static int MASK = 255;
+      byte buf[BUF_LENGTH];
+
+      for (int i = 0; i < BUF_LENGTH; i++) {
+        buf[i] = (frequency >> (i * 8) & MASK);
+      }
+      //buf[0] = (frequency >> 0) & MASK;
+      //buf[1] = (frequency >> 8) & MASK;
+      //buf[2] = (frequency >> 16) & MASK;
+      //buf[3] = (frequency >> 24) & MASK;
       Serial1.write(buf, sizeof(buf));
     }
   }

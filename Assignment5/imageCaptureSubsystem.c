@@ -16,7 +16,7 @@ void imageCaptureFunction(void* data) {
     }
 
     for (int i = 0; i < FFT_BUFFER_SIZE; i++) {
-        // divide by 10 to prevent overflows
+        // divide by 100.0 to prevent overflows
         imageData -> fft_in[i] = imageData -> fft_in[i] / 100.0 - OFFSET_ADC / 100.0;
     }
 

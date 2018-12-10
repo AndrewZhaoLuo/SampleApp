@@ -14,7 +14,7 @@ void pirateDetectionFunction(void* data) {
       int count = 0;
 
       unsigned long long startTime = getTimeMillis();
-      for(int i = 0; i < 10000; i++){
+      for(int i = 0; i < DETECTION_MAX_SAMPLES; i++){
         prev = curr;
         curr = analogRead(PIRATE_DETECTION_PIN);
         if(curr < DETECTION_CUTOFF && prev >= DETECTION_CUTOFF){

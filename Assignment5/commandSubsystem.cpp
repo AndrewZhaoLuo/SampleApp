@@ -48,7 +48,7 @@ void commandFunction(void* data) {
         }
         buffer[i+1] = '\0';
         int thrustCommand = atoi(buffer);
-        if(thrustCommand >= 0 && thrustCommand <= 65536){
+        if(thrustCommand >= MIN_THRUST_COMMAND && thrustCommand <= MAX_THRUST_COMMAND){
           *(comManData->thrustCommandPtr) = thrustCommand;
           *(comManData->userThrustValuePtr) = TRUE;
           *(comManData->responseMessagePtr) = "A: T";

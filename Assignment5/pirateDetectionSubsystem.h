@@ -13,6 +13,7 @@
 #define DETECTION_CUTOFF 512
 #define DETECTION_ENOUGH_SAMPLES 20
 #define DETECTION_CONVERT_TO_MILLIS 1000.0
+#define DETECTION_MAX_SAMPLES 10000
 
 typedef struct pirateDetectionStruct {
     int* pirateDistance;

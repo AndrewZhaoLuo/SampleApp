@@ -5,6 +5,8 @@
 #define NUMBER_OF_DIGITS 5
 #define NUM_INITIALS 2
 #define NUM_FOR_DATE 8
+#define MIN_THRUST_COMMAND 0
+#define MAX_THRUST_COMMAND 65536
 
 // for TRUE/FALSE
 #include "bool.h"
