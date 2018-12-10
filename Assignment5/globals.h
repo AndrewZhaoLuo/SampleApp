@@ -110,6 +110,8 @@ Bool pirateDetected;
 int pirateDistance;
 Bool firePhasor;
 Bool fireTorpedo;
+char* initials;
+char* date;
 
 // data buffers
 unsigned int timeIntervalBuf[16 + BUFFER_METADATA_SIZE];

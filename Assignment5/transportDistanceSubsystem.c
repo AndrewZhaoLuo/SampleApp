@@ -43,6 +43,7 @@ void transportDistanceFunction(void* data) {
       double timeInterval = duration/((double) count);
 
       //print_format("Time interval: %d\n", (int) timeInterval);
+      //print_format("Duration: %d\n", (int) duration);
 
       pushSample(transportData->timeIntervalBuffer, (int) timeInterval);
 

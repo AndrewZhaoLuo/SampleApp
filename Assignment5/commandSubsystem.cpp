@@ -57,6 +57,22 @@ void commandFunction(void* data) {
           *(comManData->responseMessagePtr) = "E";
           *(comManData->isNewResponsePtr) = TRUE;
         }
+      } else if (command == 'n' || command == 'N') {
+        while(Serial.available() < NUM_INITIALS){
+          // Wait until a valid number has arrived
+        }
+        int i;
+        for (i = 0; i < NUM_INITIALS; i++){
+          (*(comManData->initials))[i] = Serial.read();
+        }
+      } else if (command == 'y' || command == 'Y') {
+        while(Serial.available() < NUM_FOR_DATE){
+          // Wait until a valid number has arrived
+        }
+        int i;
+        for (i = 0; i < NUM_FOR_DATE; i++){
+          (*(comManData->date))[i] = Serial.read();
+        }
       } else if (command == 'm' || command == 'M') {
         // Since value must be a character, wait for the next input letter
         while(Serial.available() < 1){

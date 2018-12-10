@@ -37,6 +37,8 @@ typedef struct satelliteComsDataStruct {
     Bool* userThrustValuePtr;
     unsigned short* batteryTempPtr;
     unsigned short* transportDistPtr;
+    char** initials;
+    char** date;
 } satelliteComsData;
 
 void satelliteComsFunction(void* data);

@@ -96,6 +96,8 @@ void initComsData() {
     comsData.userThrustValuePtr = &userThrustValue;
     comsData.batteryTempPtr = &batteryTemp;
     comsData.transportDistPtr = &transportDist;
+    comsData.initials = &initials;
+    comsData.date = &date;
 }
 
 void initDisplayData() {
@@ -167,6 +169,8 @@ void initCommandData() {
   commandData.thrustCommandPtr = &thrustCommand;
   commandData.firePhasor = &firePhasor;
   commandData.fireTorpedo = &fireTorpedo;
+  commandData.initials = &initials;
+  commandData.date = &date;
 }
 
 void initPirateDetectionData() {
@@ -216,6 +220,8 @@ void initialize(){
     pirateDetected = FALSE;
     firePhasor = FALSE;
     fireTorpedo = FALSE;
+    initials = "XX";
+    date = "MM/DD/YY";
 
     // Initalize data buffers
     initBuffer(batteryBuf, 16 + BUFFER_METADATA_SIZE); //16-sample battery buffer

@@ -58,8 +58,6 @@ void reschedule() {
 
             if (TCB_NUM == PIRATE_DETECTION_TCB && !transportDistanceFreqConnectedFlag) continue;
 
-            if (TCB_NUM == PIRATE_DETECTION_TCB && !transportDistanceFreqConnectedFlag) continue;
-
             addToTail(&queue, &tcbs[TCB_NUM]);
           }
       }

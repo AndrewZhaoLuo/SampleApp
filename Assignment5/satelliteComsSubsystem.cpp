@@ -121,6 +121,9 @@ void satelliteComsFunction(void* data) {
     unsigned long long timeSinceLastPrint = (curTime - firstRunTime);
 	if (timeSinceLastPrint >= FIVE_SECONDS) {
 		print_format("---------------------------------------");
+    print_format("NAME: TRIPLE A INDUSTRIES");
+    print_format("DATE: %s", *(comsData->date));
+    print_format("OPERATOR: %s", *(comsData->initials));
 		print_format("Fuel Low: %d", *(comsData->fuelLowPtr));
 		print_format("Battery Low: %d", *(comsData->batteryLowPtr));
 		print_format("Solar Panel State: %d", *(comsData->solarPanelStatePtr));
