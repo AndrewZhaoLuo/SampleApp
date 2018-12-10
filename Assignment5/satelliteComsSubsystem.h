@@ -6,6 +6,8 @@
 #define MEDIUM_LEVEL_FUEL_WARNING 50
 #define LOW_LEVEL_BATTERY_WARNING 35
 #define LOW_LEVEL_FUEL_WARNING 25
+#define FIVE_SECONDS 5000
+#define TEN_SECONDS 10000
 
 // range of values that can be received as a "command"
 #define RANDOM_MIN_CMD 0
@@ -25,6 +27,7 @@ typedef struct satelliteComsDataStruct {
     Bool* batteryLowPtr;
     int* last_freq;
     char* commandPtr;
+    char* PS4commandPtr;
     char* responsePtr;
     Bool* isEarthTerminalPtr;
     Bool* schedCommandTaskPtr;

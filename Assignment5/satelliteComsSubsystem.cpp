@@ -5,17 +5,21 @@ extern "C" {
   #include "satelliteComsSubsystem.h"
   #include "rand1.h"
   #include "print_format.h"
+  #include "clock.h"
 }
 
 void satelliteComsFunction(void* data) {
   // Cast to correct pointer
+  static unsigned long long firstRunTime = getTimeMillis();
+  static int printParity = 1;
   satelliteComsData* comsData = (satelliteComsData*) data;
 
   // Get global command
   if(Serial.available() > 0){
     char incomingByte = Serial.read();
+	char PS4incomingByte = PS4Serial.read();
     // If command is X, we are switching between satellite and earth terminal
-    if (incomingByte == 'x' || incomingByte == 'X') {
+    if ((incomingByte || PS4incomingByte) == 'x' || (incomingByte || PS4incomingByte) == 'X') {
       if(*(comsData->isEarthTerminalPtr)){
         *(comsData->isEarthTerminalPtr) = FALSE;
         print_format("Now in Satellite Terminal mode");
@@ -27,6 +31,8 @@ void satelliteComsFunction(void* data) {
     // Otherwise, set the global command to the incoming command and schedule appropriate task
     else {
       *(comsData->commandPtr) = toupper(incomingByte);
+      *(comsData->PS4commandPtr) = toupper(PS4incomingByte);
+
       if(*(comsData->isEarthTerminalPtr)){
         *(comsData->schedCommandTaskPtr) = TRUE;
         *(comsData->schedVehicleCommsPtr) = FALSE;
@@ -108,10 +114,21 @@ void satelliteComsFunction(void* data) {
   }
 
     // TODO: THE FOLLOWING MUST PRINT AT A FIVE SECOND RATE
-    /*
-    print_format("\tFuel Low Warning: %d\n\tBattery Low Warning: %d\n", *(comsData->fuelLowPtr), *(comsData->batteryLowPtr));
-
-    print_format("\tSolar Panel State: %d\n\tBattery Level: %d\n\tFuel Level: %d\n\tPower Consumption: %d\n\tPower Generation: %d\n",
-                  *(comsData->solarPanelStatePtr), *(comsData->batteryLevelPtr), *(comsData->fuelLevelPtr), *(comsData->powerConsumptionPtr), *(comsData->powerGenerationPtr));
-                  */
+  unsigned long long timeSinceLastPrint = (getTimeMillis() - firstRunTime);
+	if (((timeSinceLastPrint % TEN_SECONDS) >= FIVE_SECONDS) & printParity) {
+		print_format("---------------------------------------");
+		print_format("Fuel Low: %d", *(comsData->fuelLowPtr));
+		print_format("Battery Low: %d", *(comsData->batteryLowPtr));
+		print_format("Solar Panel State: %d", *(comsData->solarPanelStatePtr));
+		print_format("Battery Level: %d", *(comsData->batteryLevelPtr));
+		print_format("Fuel Level: %d", *(comsData->fuelLevelPtr));
+		print_format("Power Consumption: %d", *(comsData->powerConsumptionPtr));
+		print_format("Battery Temperature: %d", *(comsData->batteryTempPtr));
+		print_format("Transport Distance: %d", *(comsData->transportDistPtr));
+		print_format("Image Data: %d", *(comsData->batteryLowPtr));
+		print_format("---------------------------------------");
+		printParity = 0;
+	} else {
+		printParity = 1;
+	}
 }
