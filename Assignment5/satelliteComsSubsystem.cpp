@@ -11,7 +11,6 @@ extern "C" {
 void satelliteComsFunction(void* data) {
   // Cast to correct pointer
   static unsigned long long firstRunTime = getTimeMillis();
-  static int printParity = 1;
   satelliteComsData* comsData = (satelliteComsData*) data;
 
   // Get global command
@@ -38,13 +37,13 @@ void satelliteComsFunction(void* data) {
         *(comsData->schedVehicleCommsPtr) = TRUE;
       }
     }
-  } 
+  }
   // No new command to read, so don't schedule either command or vehicle task
   else {
     *(comsData->schedCommandTaskPtr) = FALSE;
     *(comsData->schedVehicleCommsPtr) = FALSE;
   }
-  
+
   // PS4 Serial communication
   if(Serial2.available() > 0 ) {
 	  char incomingByte = Serial2.read();
@@ -76,7 +75,7 @@ void satelliteComsFunction(void* data) {
       *(comsData->fuelLowPtr) = FALSE;
   }
 
-  // No longer necessary 
+  // No longer necessary
   /*
   if (*(comsData -> last_freq) != NO_NEW_FREQUENCY_INFO){
       //print_format("Image frequency: %d", *comsData -> last_freq);
@@ -113,13 +112,14 @@ void satelliteComsFunction(void* data) {
     } else {
       Serial.println(*(comsData->responseMessagePtr));
     }
-    
+
     *(comsData->isNewResponsePtr) = FALSE;
   }
 
     // TODO: THE FOLLOWING MUST PRINT AT A FIVE SECOND RATE
-  unsigned long long timeSinceLastPrint = (getTimeMillis() - firstRunTime);
-	if (((timeSinceLastPrint % TEN_SECONDS) >= FIVE_SECONDS) & printParity) {
+    unsigned long long curTime = getTimeMillis();
+    unsigned long long timeSinceLastPrint = (curTime - firstRunTime);
+	if (timeSinceLastPrint >= FIVE_SECONDS) {
 		print_format("---------------------------------------");
 		print_format("Fuel Low: %d", *(comsData->fuelLowPtr));
 		print_format("Battery Low: %d", *(comsData->batteryLowPtr));
@@ -131,8 +131,6 @@ void satelliteComsFunction(void* data) {
 		print_format("Transport Distance: %d", *(comsData->transportDistPtr));
 		print_format("Image Data: %d", *(comsData->batteryLowPtr));
 		print_format("---------------------------------------");
-		printParity = 0;
-	} else {
-		printParity = 1;
+		firstRunTime = curTime;
 	}
 }
