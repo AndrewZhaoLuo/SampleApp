@@ -32,13 +32,15 @@ typedef struct satelliteComsDataStruct {
     Bool* isEarthTerminalPtr;
     Bool* schedCommandTaskPtr;
     Bool* schedVehicleCommsPtr;
-    char** responseMessagePtr; 
+    char** responseMessagePtr;
     Bool* isNewResponsePtr;
     Bool* userThrustValuePtr;
     unsigned short* batteryTempPtr;
     unsigned short* transportDistPtr;
     char** initials;
     char** date;
+    int* pirateDistance;
+    Bool* pirateDetected;
 } satelliteComsData;
 
 void satelliteComsFunction(void* data);

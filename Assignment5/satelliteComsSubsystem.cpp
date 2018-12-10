@@ -132,7 +132,9 @@ void satelliteComsFunction(void* data) {
 		print_format("Power Consumption: %d", *(comsData->powerConsumptionPtr));
 		print_format("Battery Temperature: %d", *(comsData->batteryTempPtr));
 		print_format("Transport Distance: %d", *(comsData->transportDistPtr));
-		print_format("Image Data: %d", *(comsData->batteryLowPtr));
+		print_format("Image Data: %d", *(comsData->last_freq));
+        print_format("Pirate Distance: %d", *(comsData->pirateDistance));
+        print_format("Pirate Detected: %d", *(comsData->pirateDetected));
 		print_format("---------------------------------------");
 		firstRunTime = curTime;
 	}

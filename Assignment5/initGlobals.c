@@ -98,6 +98,8 @@ void initComsData() {
     comsData.transportDistPtr = &transportDist;
     comsData.initials = &initials;
     comsData.date = &date;
+    comsData.pirateDistance = &pirateDistance;
+    comsData.pirateDetected = &pirateDetected;
 }
 
 void initDisplayData() {
