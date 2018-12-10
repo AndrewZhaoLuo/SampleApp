@@ -17,10 +17,12 @@ void pirateDetectionFunction(void* data) {
       for(int i = 0; i < DETECTION_MAX_SAMPLES; i++){
         prev = curr;
         curr = analogRead(PIRATE_DETECTION_PIN);
+        //print_format("%d", curr);
         if(curr < DETECTION_CUTOFF && prev >= DETECTION_CUTOFF){
           count++;
         }
         if(count == DETECTION_ENOUGH_SAMPLES){
+          i = DETECTION_MAX_SAMPLES;
           break;
         }
       }
@@ -49,6 +51,6 @@ void pirateDetectionFunction(void* data) {
       }
 
       //print_format("Detected: %d, meters %d, freq %d", *(detectionData -> pirateDetected), *(detectionData -> pirateDistance), (int)frequency);
-      //print_format("Phasors fire: %d, torpedos fire: %d", firePhasor, fireTorpedo);
+      //print_format("Phasors fire: %d, torpedos fire: %d, count: %d, duration: %d", firePhasor, fireTorpedo, count);
     }
 }
