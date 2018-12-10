@@ -12,8 +12,6 @@ extern "C" {
 char incomingByte;
 char incomingResponse;
 
-int numDigits(int number);
-
 void vehicleCommsFunction(void* data) {
   // Cast to correct pointer
   vehicleCommsData* vehicleData = (vehicleCommsData*) data;
@@ -58,7 +56,6 @@ void vehicleCommsFunction(void* data) {
     if(incomingResponse == 'i' || incomingResponse == 'I'){
       Serial1.write('P');
       int frequency = *(vehicleData->last_freq);
-      int digits = numDigits(frequency);
 
       // Convert to 4 bytes to send over serial
       Serial.print("Frequency: ");
@@ -72,13 +69,4 @@ void vehicleCommsFunction(void* data) {
       Serial1.write(buf, sizeof(buf));
     }
   }
-}
-
-int numDigits(int number){
-  int digits = 0;
-  while(number){
-    number /= 10;
-    digits++;
-  }
-  return digits;
 }

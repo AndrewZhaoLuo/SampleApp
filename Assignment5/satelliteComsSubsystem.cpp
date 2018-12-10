@@ -17,9 +17,8 @@ void satelliteComsFunction(void* data) {
   // Get global command
   if(Serial.available() > 0){
     char incomingByte = Serial.read();
-	char PS4incomingByte = PS4Serial.read();
     // If command is X, we are switching between satellite and earth terminal
-    if ((incomingByte || PS4incomingByte) == 'x' || (incomingByte || PS4incomingByte) == 'X') {
+    if (incomingByte == 'x' || incomingByte == 'X' ){
       if(*(comsData->isEarthTerminalPtr)){
         *(comsData->isEarthTerminalPtr) = FALSE;
         print_format("Now in Satellite Terminal mode");
@@ -31,8 +30,6 @@ void satelliteComsFunction(void* data) {
     // Otherwise, set the global command to the incoming command and schedule appropriate task
     else {
       *(comsData->commandPtr) = toupper(incomingByte);
-      *(comsData->PS4commandPtr) = toupper(PS4incomingByte);
-
       if(*(comsData->isEarthTerminalPtr)){
         *(comsData->schedCommandTaskPtr) = TRUE;
         *(comsData->schedVehicleCommsPtr) = FALSE;
@@ -46,6 +43,13 @@ void satelliteComsFunction(void* data) {
   else {
     *(comsData->schedCommandTaskPtr) = FALSE;
     *(comsData->schedVehicleCommsPtr) = FALSE;
+  }
+  
+  // PS4 Serial communication
+  if(Serial2.available() > 0 ) {
+	  char incomingByte = Serial2.read();
+	  *(comsData->commandPtr) = toupper(incomingByte);
+	  *(comsData->schedCommandTaskPtr) = TRUE;
   }
 
   // If user at earth terminal provided a thrust command, use that. Otherwise, generate random command

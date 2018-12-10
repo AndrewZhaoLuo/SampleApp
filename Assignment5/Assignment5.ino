@@ -12,6 +12,7 @@ void setup() {
 
   Serial.begin(BAUD_RATE);
   Serial1.begin(BAUD_RATE);
+  Serial2.begin(BAUD_RATE); // PS4 Controller
   while (!Serial) {
     ; // wait for serial port to connect. Needed for native USB port only
   }
